@@ -17,6 +17,40 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
 
         primarySwatch: Colors.green,
+
+        primaryColor: Color(0xff6a1b9a),
+        primaryColorDark: Color(0xff4a148c),
+        primaryColorLight: Color(0xff7b1fa2),
+
+        // secondary color
+        accentColor: Color(0xfffdd835),
+
+        // secondary color Light
+        highlightColor: Color(0xffffeb3b),
+
+        // primary color Dark
+        hintColor: Color(0xff4a148c),
+
+        buttonColor: Colors.black.withOpacity(0.75),
+
+        fontFamily: 'Rounded',
+
+        textTheme: TextTheme(
+          //Biggest text
+          headline1: TextStyle(fontSize: 40.0, color: Colors.white),
+          //App bar text
+          headline2: TextStyle(fontSize: 20.0, color: Colors.white),
+          //Black text
+          headline3: TextStyle(fontSize: 14.0, color: Colors.black, fontWeight: FontWeight.bold),
+          //Grey text
+          headline4: TextStyle(fontSize: 14.0),
+          //White text
+          headline5: TextStyle(fontSize: 14.0, color: Colors.white),
+          //App bar text - black
+          headline6: TextStyle(fontSize: 14.0,),
+        ),
+
+
       ),
       home: MyHomePage(title: Strings.title),
     );

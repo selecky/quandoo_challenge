@@ -17,17 +17,21 @@ class _MasterState extends State<Master> {
       child: GridView.builder(
           itemCount: 4,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            childAspectRatio: 2 / 3
+            crossAxisCount: 2,
+            childAspectRatio: 3 / 2
           ),
           padding: const EdgeInsets.only(top: 64, bottom: 64, left: 16, right: 16),
 
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
-              child: MyRestaurantCard(onTap: () {
+              child: MyRestaurantCard(
+                  onTap: () {
                 print('Clicked ' + index.toString());
-              }),
+              },
+                title: 'Restaurant ' + index.toString() ,
+
+              ),
             );
           }),
     );
