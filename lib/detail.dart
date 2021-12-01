@@ -10,6 +10,6 @@ class Detail extends StatefulWidget {
 class _DetailState extends State<Detail> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: Container(color: Colors.red,));
+    return Container(color: Colors.red, width: 100, height: 100,);
   }
 }

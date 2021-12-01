@@ -44,8 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Row(
         children: [
-          Master(),
-          Detail(),
+          Expanded(
+              flex: 1,
+              child: Master()),
+          Expanded(
+              flex: 1,
+              child: Detail()),
         ],)
     );
   }
