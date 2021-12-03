@@ -6,9 +6,9 @@ class MyRestaurantCard extends StatelessWidget {
   final bool isHighlighted;
 
   const MyRestaurantCard({
-    Key? key,
-    required this.onTap,
-    required this.name,
+    Key key,
+    @required this.onTap,
+    @required this.name,
     this.isHighlighted = true,
   }) : super(key: key);
 
