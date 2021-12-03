@@ -51,12 +51,11 @@ class _MasterState extends State<Master> {
                     child: MyRestaurantCard(
                       onTap: () {
                         _bloc.add(EventPubSelect(_pubList[index]));
-                        print('Clicked ' + index.toString());
                         if (MediaQuery.of(context).size.height > MediaQuery.of(context).size.width) {
                           Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail()));
                         }
                       },
-                      name: 'Restaurant ' + index.toString(),
+                      name: _pubList[index].name,
                     ),
                   );
                 });

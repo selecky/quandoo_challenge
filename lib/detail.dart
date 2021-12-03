@@ -32,7 +32,7 @@ class _DetailState extends State<Detail> {
           builder: (context, state) {
             if (state is StatePubsLoadSuccess) {
               return Center(
-                child: Text(state.selectedPub?.name ?? "No item selected"),
+                child: Text(state.selectedPub?.name ?? Strings.noItemSelected),
               );
             } else {
               return Container();
