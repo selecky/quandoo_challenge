@@ -29,7 +29,7 @@ class _MasterState extends State<Master> {
                   onTap: () {
                 print('Clicked ' + index.toString());
               },
-                title: 'Restaurant ' + index.toString() ,
+                name: 'Restaurant ' + index.toString() ,
 
               ),
             );

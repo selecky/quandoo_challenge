@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class MyRestaurantCard extends StatelessWidget {
   final Function() onTap;
-  final String title;
+  final String name;
   final bool isHighlighted;
 
   const MyRestaurantCard({
     Key? key,
     required this.onTap,
-    required this.title,
+    required this.name,
     this.isHighlighted = true,
   }) : super(key: key);
 
@@ -51,7 +51,7 @@ class MyRestaurantCard extends StatelessWidget {
                                     ])),
                             child: Center(
                                 child: Text(
-                              title,
+                              name,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.headline2,
                             ))))
