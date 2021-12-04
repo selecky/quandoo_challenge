@@ -35,47 +35,64 @@ class _MasterState extends State<Master> {
     isTablet = MediaQuery.of(context).size.shortestSide > 600;
 
     return Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
+          shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(160), bottomRight: Radius.circular(160))),
           centerTitle: true,
           title: Text(Strings.pubList),
         ),
-        body: BlocBuilder<PubBloc, PubState>(
-          bloc: _bloc,
-            builder: (context, state) {
-          if (state is StatePubsLoading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is StatePubsLoadSuccess) {
+        body: Stack(
+          children: [
 
-            _pubList = state.pubList;
-            _selectedPub = state.selectedPub;
+//Background image
+            Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Image.asset(
+                  'assets/images/background.png',
+                  fit: BoxFit.cover,
+                )),
 
-            return GridView.builder(
-                itemCount: _pubList.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: isTablet? 2 : 1, childAspectRatio: 3 / 2),
-                padding: const EdgeInsets.only(
-                    top: 64, bottom: 64, left: 16, right: 16),
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: MyRestaurantCard(
-                      isHighlighted: _selectedPub == _pubList[index],
-                      onTap: () {
-                        _bloc.add(EventPubSelect(_pubList[index]));
-                        if (!isLandscape) {
-                          Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail()));
-                        }
-                      },
-                      name: _pubList[index].name,
-                    ),
-                  );
-                });
+            BlocBuilder<PubBloc, PubState>(
+              bloc: _bloc,
+                builder: (context, state) {
+              if (state is StatePubsLoading) {
+                return Center(child: CircularProgressIndicator());
+              } else if (state is StatePubsLoadSuccess) {
 
-            //StatePubsLoadFail
-          } else {
-            return Center(child: Text(Strings.errorLoadingPubs));
-          }
+                _pubList = state.pubList;
+                _selectedPub = state.selectedPub;
 
-        }));
+                return GridView.builder(
+                    itemCount: _pubList.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: isTablet? 2 : 1, childAspectRatio: 3 / 2),
+                    padding: const EdgeInsets.only(
+                        top: 96, bottom: 64, left: 16, right: 16),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: MyRestaurantCard(
+                          isHighlighted: _selectedPub == _pubList[index],
+                          onTap: () {
+                            _bloc.add(EventPubSelect(_pubList[index]));
+                            if (!isLandscape) {
+                              Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail()));
+                            }
+                          },
+                          name: _pubList[index].name,
+                        ),
+                      );
+                    });
+
+                //StatePubsLoadFail
+              } else {
+                return Center(child: Text(Strings.errorLoadingPubs));
+              }
+
+            }),
+          ],
+        ));
   }
 }

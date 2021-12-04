@@ -26,24 +26,41 @@ class _DetailState extends State<Detail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
+          shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(160), bottomRight: Radius.circular(160))),
           centerTitle: true,
           title: Text(Strings.pubDetail),
         ),
-        body: BlocBuilder<PubBloc, PubState>(
-          bloc: _bloc,
-          builder: (context, state) {
-            if (state is StatePubsLoadSuccess) {
+        body: Stack(
+          children: [
 
-              _selectedPub = state.selectedPub;
+//Background image
+            Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Image.asset(
+                  'assets/images/background.png',
+                  fit: BoxFit.cover,
+                )),
 
-              return Center(
-                child: Text(_selectedPub?.name ?? Strings.noItemSelected),
-              );
-            } else {
-              return Container();
-            }
-          },
+            BlocBuilder<PubBloc, PubState>(
+              bloc: _bloc,
+              builder: (context, state) {
+                if (state is StatePubsLoadSuccess) {
+
+                  _selectedPub = state.selectedPub;
+
+                  return Center(
+                    child: Text(_selectedPub?.name ?? Strings.noItemSelected),
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
+          ],
         ));
   }
 }
