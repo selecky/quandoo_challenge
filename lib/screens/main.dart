@@ -25,11 +25,11 @@ class MyApp extends StatelessWidget {
         title: Strings.title,
         theme: ThemeData(
 
-          primarySwatch: Colors.green,
+          primarySwatch: Colors.amber,
 
-          primaryColor: Color(0xff6a1b9a),
-          primaryColorDark: Color(0xff4a148c),
-          primaryColorLight: Color(0xff7b1fa2),
+          primaryColor: Colors.amber[600],
+          primaryColorDark: Colors.amber[700],
+          primaryColorLight: Colors.amber,
 
           // secondary color
           accentColor: Color(0xfffdd835),
