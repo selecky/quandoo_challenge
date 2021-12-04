@@ -1,15 +1,18 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quandoo_challenge/Pub.dart';
+import 'package:quandoo_challenge/customWidgets/Pub.dart';
+import 'package:quandoo_challenge/repository/repository.dart';
 
-import 'bloc.dart';
+import 'pub_barrel.dart';
 
 class PubBloc extends Bloc<PubEvent, PubState> {
   List<Pub> _pubs = [];
   Pub _selected;
+  final Repository repository;
 
-  PubBloc(PubState initialState) : super(initialState);
+  PubBloc({@required this.repository, PubState initialState}) : super(initialState);
 
   PubState get initialState => StatePubsLoading();
 
@@ -27,11 +30,8 @@ class PubBloc extends Bloc<PubEvent, PubState> {
       yield StatePubsLoadSuccess(_pubs, _selected);
     }
     if (event is EventPubsLoad) {
-      Pub pub0 = Pub(name: 'Sabor Latino-0', address: 'za rohem 123-0');
-      Pub pub1 = Pub(name: 'Sabor Latino-1', address: 'za rohem 123-1');
-      Pub pub2 = Pub(name: 'Sabor Latino-2', address: 'za rohem 123-2');
-      Pub pub3 = Pub(name: 'Sabor Latino-3', address: 'za rohem 123-3');
-      _pubs = [pub0, pub1, pub2, pub3];
+      yield StatePubsLoading(); // to show progress indicator while waiting for the data
+      _pubs = await repository.fetchPubs();
       yield StatePubsLoadSuccess(_pubs, _selected);
     }
   }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quandoo_challenge/strings.dart';
 
-import 'Pub.dart';
-import 'blocks/bloc.dart';
-import 'customWidgets/myRestaurantCard.dart';
+import '../customWidgets/Pub.dart';
+import '../blocs/pub_barrel.dart';
+import '../customWidgets/myRestaurantCard.dart';
 import 'detail.dart';
 
 class Master extends StatefulWidget {

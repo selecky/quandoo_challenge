@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:quandoo_challenge/Pub.dart';
+import 'package:quandoo_challenge/customWidgets/Pub.dart';
 
 abstract class PubState extends Equatable {
   const PubState();

@@ -10,8 +10,11 @@ class Pub extends Equatable {
     @required this.address,
   });
 
-  factory Pub.fromPub(Pub pub) {
-    return Pub(name: pub.name, address: pub.address);
+  factory Pub.fromJson(Map<String, dynamic> json) {
+    return Pub(
+      name: json['name'],
+      address: json['address'],
+    );
   }
 
   @override

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quandoo_challenge/strings.dart';
 
-import 'Pub.dart';
-import 'blocks/bloc.dart';
+import '../customWidgets/Pub.dart';
+import '../blocs/pub_barrel.dart';
 
 class Detail extends StatefulWidget {
   const Detail({Key key}) : super(key: key);

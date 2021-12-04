@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quandoo_challenge/detail.dart';
-import 'package:quandoo_challenge/master.dart';
+import 'package:quandoo_challenge/repository/repository.dart';
+import 'package:quandoo_challenge/screens/detail.dart';
+import 'package:quandoo_challenge/screens/master.dart';
 import 'package:quandoo_challenge/strings.dart';
 
-import 'blocks/bloc.dart';
+import '../blocs/pub_barrel.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,10 +13,13 @@ void main() {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
+  final Repository repository = Repository();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PubBloc(StatePubsLoading()),
+      create: (context) => PubBloc(repository: repository),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: Strings.title,
