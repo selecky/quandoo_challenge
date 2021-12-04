@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quandoo_challenge/strings.dart';
 
+import 'Pub.dart';
 import 'blocks/bloc.dart';
 
 class Detail extends StatefulWidget {
@@ -14,6 +15,7 @@ class Detail extends StatefulWidget {
 class _DetailState extends State<Detail> {
 
   PubBloc _bloc;
+  Pub _selectedPub;
 
   @override
   void initState() {
@@ -29,10 +31,14 @@ class _DetailState extends State<Detail> {
           title: Text(Strings.pubDetail),
         ),
         body: BlocBuilder<PubBloc, PubState>(
+          bloc: _bloc,
           builder: (context, state) {
             if (state is StatePubsLoadSuccess) {
+
+              _selectedPub = state.selectedPub;
+
               return Center(
-                child: Text(state.selectedPub?.name ?? Strings.noItemSelected),
+                child: Text(_selectedPub?.name ?? Strings.noItemSelected),
               );
             } else {
               return Container();

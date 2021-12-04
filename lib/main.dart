@@ -77,14 +77,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  bool isLandscape;
+
   @override
   Widget build(BuildContext context) {
+
+    isLandscape = MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
+
     return LayoutBuilder(
         builder: (context, constraints) {
-          if (constraints.maxWidth < constraints.maxHeight) {
-            return MobileView();
-          } else {
+          if (isLandscape) {
             return TabletView();
+          } else {
+            return MobileView();
           }
         }
     );
@@ -104,7 +109,7 @@ class TabletView extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(child: Master()),
-        Container(width: 16, height: MediaQuery.of(context).size.height,),
+        Container(width: 16, height: MediaQuery.of(context).size.height),
         Expanded(child: Detail())
       ],
     );

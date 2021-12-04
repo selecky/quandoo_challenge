@@ -17,6 +17,8 @@ class Master extends StatefulWidget {
 class _MasterState extends State<Master> {
   PubBloc _bloc;
   List<Pub> _pubList;
+  bool isLandscape;
+  bool isTablet;
 
   @override
   void initState() {
@@ -27,12 +29,18 @@ class _MasterState extends State<Master> {
 
   @override
   Widget build(BuildContext context) {
+
+    isLandscape = MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
+    isTablet = MediaQuery.of(context).size.shortestSide > 600;
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: Text(Strings.pubList),
         ),
-        body: BlocBuilder<PubBloc, PubState>(builder: (context, state) {
+        body: BlocBuilder<PubBloc, PubState>(
+          bloc: _bloc,
+            builder: (context, state) {
           if (state is StatePubsLoading) {
             return Center(child: CircularProgressIndicator());
           } else if (state is StatePubsLoadSuccess) {
@@ -42,7 +50,7 @@ class _MasterState extends State<Master> {
             return GridView.builder(
                 itemCount: _pubList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2, childAspectRatio: 3 / 2),
+                    crossAxisCount: isLandscape && isTablet? 2 : 1, childAspectRatio: 3 / 2),
                 padding: const EdgeInsets.only(
                     top: 64, bottom: 64, left: 16, right: 16),
                 itemBuilder: (BuildContext context, int index) {
@@ -51,7 +59,7 @@ class _MasterState extends State<Master> {
                     child: MyRestaurantCard(
                       onTap: () {
                         _bloc.add(EventPubSelect(_pubList[index]));
-                        if (MediaQuery.of(context).size.height > MediaQuery.of(context).size.width) {
+                        if (!isLandscape) {
                           Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail()));
                         }
                       },
