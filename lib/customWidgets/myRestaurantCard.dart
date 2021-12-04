@@ -9,7 +9,7 @@ class MyRestaurantCard extends StatelessWidget {
     Key key,
     @required this.onTap,
     @required this.name,
-    this.isHighlighted = true,
+    this.isHighlighted = false,
   }) : super(key: key);
 
   @override
@@ -50,11 +50,14 @@ class MyRestaurantCard extends StatelessWidget {
                                       Colors.black.withOpacity(0),
                                     ])),
                             child: Center(
-                                child: Text(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 16, right: 16),
+                                  child: Text(
                               name,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.headline2,
-                            ))))
+                            ),
+                                ))))
                   ],
                 ),
               ),

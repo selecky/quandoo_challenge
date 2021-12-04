@@ -17,6 +17,7 @@ class Master extends StatefulWidget {
 class _MasterState extends State<Master> {
   PubBloc _bloc;
   List<Pub> _pubList;
+  Pub _selectedPub;
   bool isLandscape;
   bool isTablet;
 
@@ -46,6 +47,7 @@ class _MasterState extends State<Master> {
           } else if (state is StatePubsLoadSuccess) {
 
             _pubList = state.pubList;
+            _selectedPub = state.selectedPub;
 
             return GridView.builder(
                 itemCount: _pubList.length,
@@ -57,6 +59,7 @@ class _MasterState extends State<Master> {
                   return Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: MyRestaurantCard(
+                      isHighlighted: _selectedPub == _pubList[index],
                       onTap: () {
                         _bloc.add(EventPubSelect(_pubList[index]));
                         if (!isLandscape) {
