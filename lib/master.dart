@@ -50,7 +50,7 @@ class _MasterState extends State<Master> {
             return GridView.builder(
                 itemCount: _pubList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: isLandscape && isTablet? 2 : 1, childAspectRatio: 3 / 2),
+                    crossAxisCount: isTablet? 2 : 1, childAspectRatio: 3 / 2),
                 padding: const EdgeInsets.only(
                     top: 64, bottom: 64, left: 16, right: 16),
                 itemBuilder: (BuildContext context, int index) {
