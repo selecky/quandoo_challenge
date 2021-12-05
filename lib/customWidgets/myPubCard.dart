@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
+import 'Pub.dart';
+
 class MyPubCard extends StatelessWidget {
+  final Pub pub;
   final Function() onTap;
-  final String name;
   final bool isHighlighted;
 
   const MyPubCard({
     Key key,
+    @required this.pub,
     @required this.onTap,
-    @required this.name,
     this.isHighlighted = false,
   }) : super(key: key);
 
@@ -21,17 +23,21 @@ class MyPubCard extends StatelessWidget {
           child: Container(
             color: isHighlighted ? Theme.of(context).accentColor : Colors.transparent,
             child: Padding(
-              padding: const EdgeInsets.all(2),
-              child: Card(
-                elevation: 8,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+              padding: const EdgeInsets.all(4),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(18),
+                  border: new Border.all(color: Colors.white, width: 2),
+                ),
                 child: Stack(
                   children: [
 //photo
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.orange,
-                          borderRadius: BorderRadius.circular(16)),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.network(
+                          pub.images[0].url,
+                      fit: BoxFit.fill
+                      ),
                     ),
 
 //name
@@ -53,11 +59,14 @@ class MyPubCard extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.only(left: 16, right: 16),
                                   child: Text(
-                              name,
+                              pub.name,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context).textTheme.headline2,
                             ),
                                 ))))
+
+
+
                   ],
                 ),
               ),

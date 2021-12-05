@@ -67,13 +67,16 @@ class _MasterState extends State<Master> {
                 return GridView.builder(
                     itemCount: _pubList.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: isTablet? 2 : 1, childAspectRatio: 3 / 2),
+                        crossAxisCount: isTablet? 2 : 1,
+                        childAspectRatio: 3 / 1.9
+                    ),
                     padding: const EdgeInsets.only(
                         top: 96, bottom: 64, left: 16, right: 16),
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: MyPubCard(
+                          pub: _pubList[index],
                           isHighlighted: _selectedPub == _pubList[index],
                           onTap: () {
                             _bloc.add(EventPubSelect(_pubList[index]));
@@ -81,7 +84,6 @@ class _MasterState extends State<Master> {
                               Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail()));
                             }
                           },
-                          name: _pubList[index].name,
                         ),
                       );
                     });

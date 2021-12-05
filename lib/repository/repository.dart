@@ -29,12 +29,12 @@ class Repository {
       loadedPubs = pubMapList.map((Map<String, dynamic> pubMap) {
 
         var list = pubMap['images'] as List;
-        print(list.runtimeType); //returns List<dynamic>
+        // print(list.runtimeType); //returns List<dynamic>
         List<PhotoUrl> photoUrlList = list.map((i) => PhotoUrl.fromJson(i)).toList();
 
         return Pub(
             name: pubMap["name"],
-            // location: pubMap["address"],
+            location: Location.fromJson(pubMap['location']),
             reviewScore: pubMap["reviewScore"],
             images: photoUrlList,
         );
@@ -110,23 +110,3 @@ class PhotoUrl{
   }
 
 }
-
-// class Images{
-//   List<PhotoUrl> images;
-//
-//   Images({
-//     this.images,
-//   });
-//
-//   factory Images.fromJson(Map<String, dynamic> imagesJson) {
-//
-//     var list = imagesJson['images'] as List;
-//     print(list.runtimeType); //returns List<dynamic>
-//     List<PhotoUrl> imagesList = list.map((i) => PhotoUrl.fromJson(i)).toList();
-//
-//     return Images(
-//       images: imagesJson['images'],
-//     );
-//   }
-//
-// }

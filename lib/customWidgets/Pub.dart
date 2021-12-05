@@ -15,15 +15,6 @@ class Pub extends Equatable {
     @required this.images,
   });
 
-  // factory Pub.fromJson(Map<String, dynamic> pubJson) {
-  //   return Pub(
-  //     name: pubJson['name'],
-  //     // location: pubJson['location'],
-  //     reviewScore: pubJson['reviewScore'],
-  //     images: pubJson['images'],
-  //   );
-  // }
-
   @override
   List<Object> get props => [
     name,
