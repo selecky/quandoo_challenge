@@ -4,7 +4,7 @@ import 'package:quandoo_challenge/strings.dart';
 
 import '../customWidgets/Pub.dart';
 import '../blocs/pub_barrel.dart';
-import '../customWidgets/myRestaurantCard.dart';
+import '../customWidgets/myPubCard.dart';
 import 'detail.dart';
 
 class Master extends StatefulWidget {
@@ -73,7 +73,7 @@ class _MasterState extends State<Master> {
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: MyRestaurantCard(
+                        child: MyPubCard(
                           isHighlighted: _selectedPub == _pubList[index],
                           onTap: () {
                             _bloc.add(EventPubSelect(_pubList[index]));

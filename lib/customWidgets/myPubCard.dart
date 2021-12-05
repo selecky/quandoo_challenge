@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-class MyRestaurantCard extends StatelessWidget {
+class MyPubCard extends StatelessWidget {
   final Function() onTap;
   final String name;
   final bool isHighlighted;
 
-  const MyRestaurantCard({
+  const MyPubCard({
     Key key,
     @required this.onTap,
     @required this.name,

@@ -53,7 +53,17 @@ class _DetailState extends State<Detail> {
                   _selectedPub = state.selectedPub;
 
                   return Center(
-                    child: Text(_selectedPub?.name ?? Strings.noItemSelected),
+                    child: Container(color: Colors.red,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(_selectedPub?.name ?? Strings.noItemSelected),
+                          // Text(_selectedPub?.location?? 'Hovno'),
+                          Text(_selectedPub?.reviewScore.toString()?? 'no score'),
+                          Text(_selectedPub?.images?.length.toString()?? 'no images'),
+                        ],
+                      ),
+                    ),
                   );
                 } else {
                   return Container();
