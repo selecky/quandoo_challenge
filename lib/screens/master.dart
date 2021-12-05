@@ -28,6 +28,13 @@ class _MasterState extends State<Master> {
     _bloc.add(EventPubsLoad());
   }
 
+
+  @override
+  void dispose() {
+    _bloc.close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
 
