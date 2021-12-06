@@ -105,16 +105,12 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                       controller: _tabController,
                                       children:
                                           pubPhotosList.map((String url) {
-                                        return Container(
-                                          width: 500,
-                                          height: 500,
-                                          child: FittedBox(
-                                              fit: BoxFit.cover,
-                                              child: Image.network(
-                                                url,
-                                                cacheWidth: 500,
-                                              )),
-                                        );
+                                        return FittedBox(
+                                            fit: BoxFit.cover,
+                                            child: Image.network(
+                                              url,
+                                              cacheWidth: 500,
+                                            ));
                                       }).toList(),
                                     ),
                                 ],
