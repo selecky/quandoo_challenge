@@ -30,12 +30,6 @@ class _MasterState extends State<Master> {
 
 
   @override
-  void dispose() {
-    _bloc.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
 
     isLandscape = MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
@@ -85,7 +79,7 @@ class _MasterState extends State<Master> {
                         child: MyPubCard(
                           pub: _pubList[index],
                           isHighlighted: _selectedPub == _pubList[index],
-                          onTap: () {
+                          onTap: () async{
                             _bloc.add(EventPubSelect(_pubList[index]));
                             if (!isLandscape) {
                               Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail()));

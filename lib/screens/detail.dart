@@ -34,7 +34,6 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
   void dispose() {
     _tabController?.dispose();
     _controllerReview.dispose();
-    _bloc.close();
     super.dispose();
   }
 
@@ -65,7 +64,11 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
               bloc: _bloc,
               builder: (context, state) {
                 if (state is StatePubsLoadSuccess) {
+
                   _selectedPub = state.selectedPub;
+
+                  print('8888888888888888888888888888888888888888888888888888888888888888');
+                  print(_selectedPub.name);
 
                   _controllerReview.reset();
                   _controllerReview.forward();
