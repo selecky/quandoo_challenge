@@ -67,9 +67,6 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
 
                   _selectedPub = state.selectedPub;
 
-                  print('8888888888888888888888888888888888888888888888888888888888888888');
-                  print(_selectedPub.name);
-
                   _controllerReview.reset();
                   _controllerReview.forward();
 

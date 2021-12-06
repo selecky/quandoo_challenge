@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quandoo_challenge/blocs/simpleBlocDelegate.dart';
 import 'package:quandoo_challenge/repository/repository.dart';
@@ -88,6 +89,14 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     isLandscape = MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
+
+    if(MediaQuery.of(context).size.shortestSide < 600){
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    }
+
 
     return LayoutBuilder(
         builder: (context, constraints) {
