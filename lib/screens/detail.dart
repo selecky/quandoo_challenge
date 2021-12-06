@@ -84,23 +84,41 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                             color: Theme.of(context).primaryColor,
                             child: Icon(Icons.deck_rounded, size: 200,),
                           )
-                              : TabBarView(
-                                  key: ObjectKey(pubPhotosList[0]),
-                                  controller: _tabController,
-                                  children:
-                                      pubPhotosList.map((String url) {
-                                    return Container(
-                                      width: 500,
-                                      height: 500,
-                                      child: FittedBox(
-                                          fit: BoxFit.cover,
+                              : Stack(
+                                children: [
+                                  //Support containers for immediate caching of all restaurant images (invisible)
+                                  // - this helps to prevent bad UX when scrolling the tabBarView
+                                  Column(
+                                    children: pubPhotosList.map((String photoUrl) {
+                                      return Container(
+                                          width: 0,
+                                          height: 0,
                                           child: Image.network(
-                                            url,
+                                            photoUrl,
                                             cacheWidth: 500,
-                                          )),
-                                    );
-                                  }).toList(),
-                                ),
+                                          )
+                                      );
+                                    }).toList(),
+                                  ),
+                                  TabBarView(
+                                      key: ObjectKey(pubPhotosList[0]),//without key the TabBarView index does not reset on new restaurant click
+                                      controller: _tabController,
+                                      children:
+                                          pubPhotosList.map((String url) {
+                                        return Container(
+                                          width: 500,
+                                          height: 500,
+                                          child: FittedBox(
+                                              fit: BoxFit.cover,
+                                              child: Image.network(
+                                                url,
+                                                cacheWidth: 500,
+                                              )),
+                                        );
+                                      }).toList(),
+                                    ),
+                                ],
+                              ),
                         )
 
 //no item selected
