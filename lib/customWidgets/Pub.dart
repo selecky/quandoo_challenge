@@ -18,7 +18,7 @@ class Pub extends Equatable {
   @override
   List<Object> get props => [
     name,
-    // location,
+    location,
     reviewScore,
     images
   ];

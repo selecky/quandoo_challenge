@@ -85,6 +85,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                             child: Icon(Icons.deck_rounded, size: 200,),
                           )
                               : TabBarView(
+                                  key: ObjectKey(pubPhotosList[0]),
                                   controller: _tabController,
                                   children:
                                       pubPhotosList.map((String url) {
