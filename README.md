@@ -1,16 +1,23 @@
 # quandoo_challenge
 
-A new Flutter project.
+I have created this Flutter project as a response to a task that was given to me while applying for a position
+as a Flutter Engineer at [Quandoo](https://www.quandoo.de/en), a German restaurant reservation platform.
 
-## Getting Started
+## Description
 
-This project is a starting point for a Flutter application.
+- Om initialization, the app fetches JSON data from Quandoo's public test API and turns them into
+Restaurant objects in Dart.
+- Main screen is composed of a restaurant cards with main photo and name. These cards are arranged
+in list on mobile and grid on tablets.
+- On card tapping, the user is sent to a detail screen where all the available photos of the restaurant
+are available for viewing through swiping. Additionally, restaurant address and rating are displayed
+- On tablets, the layout is divided into master/detail view
 
-A few resources to get you started if this is your first Flutter project:
+## Technical details
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- [BLoC](https://pub.dev/packages/flutter_bloc) architecture is used for navigation
+- Function responsible for API calls is tested using Mockito package
+- BLoC and Repository are used to separate UI and business logic
+- The app implements basic widget animation (rating indicator in detail screen)
+- I have created the background image for the app in [Rive](https://rive.app/)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
