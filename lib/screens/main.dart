@@ -51,11 +51,11 @@ class MyApp extends StatelessWidget {
             headline2: TextStyle(fontSize: 20.0, color: Colors.white),
             //Black text
             headline3: TextStyle(
-                fontSize: 14.0,
+                fontSize: 20.0,
                 color: Colors.black,
-                fontWeight: FontWeight.bold),
+                ),
             //Grey text
-            headline4: TextStyle(fontSize: 14.0),
+            headline4: TextStyle(fontSize: 20.0),
             //White text
             headline5: TextStyle(fontSize: 14.0, color: Colors.white),
             //App bar text - black

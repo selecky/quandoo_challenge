@@ -122,7 +122,6 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                           height: 200,
                                           width: isLandscape ? MediaQuery.of(context).size.width / 2 - 8 : MediaQuery.of(context).size.width,
                                           padding: const EdgeInsets.only(top: 36),
-
                                           decoration: BoxDecoration(
                                               gradient: LinearGradient(
                                                 begin: Alignment.bottomCenter,
@@ -143,7 +142,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                         ),
                                       ),
 
-                                      //Top curved border
+           //Top curved border
                                       Positioned(
                                         bottom: -1,
                                         child: Container(
@@ -162,10 +161,26 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                     ],
                                   ),
                             ),
+//address
                           Container(
+                            padding: EdgeInsets.only(left: 32, right: 32, top: 16),
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height * 0.3,
                             color: Theme.of(context).canvasColor,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                              Text(Strings.address, style: Theme.of(context).textTheme.headline3,),
+                              Container(height: 8,),//spacer
+                              Text(_selectedPub.location.address.street + ' ' + _selectedPub.location.address.number,
+                                style: Theme.of(context).textTheme.headline4),
+                              Text(_selectedPub.location.address.district,
+                                  style: Theme.of(context).textTheme.headline4),
+                              Text(_selectedPub.location.address.zipcode + ' ' + _selectedPub.location.address.city,
+                                  style: Theme.of(context).textTheme.headline4),
+                              Text(_selectedPub.location.address.country,
+                                  style: Theme.of(context).textTheme.headline4),
+                            ],),
                           )
                         ],
                       )
