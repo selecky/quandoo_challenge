@@ -27,6 +27,7 @@ dependencies:
   flutter_bloc: 4.0.0
   http:
   auto_size_text:
+  flare_flutter:
 
 
 
@@ -59,6 +60,8 @@ flutter:
 
   assets:
     - assets/images/background.png
+
+    - assets/animations/eating.flr
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

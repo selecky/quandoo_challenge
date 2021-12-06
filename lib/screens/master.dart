@@ -1,3 +1,4 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quandoo_challenge/strings.dart';
@@ -50,10 +51,10 @@ class _MasterState extends State<Master> {
             Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                child: Image.asset(
-                  'assets/images/background.png',
-                  fit: BoxFit.cover,
-                )),
+                child: FlareActor(
+                  'assets/animations/eating.flr',
+                  animation: 'move',
+                  fit: BoxFit.fill,),),
 
             BlocBuilder<PubBloc, PubState>(
               bloc: _bloc,

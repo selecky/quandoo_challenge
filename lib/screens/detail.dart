@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quandoo_challenge/strings.dart';
@@ -19,6 +20,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
   TabController _tabController;
   List<String> pubPhotosList = [];
   AnimationController _controllerReview;
+  bool isTablet;
 
   @override
   void initState() {
@@ -39,6 +41,9 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
+    isTablet = MediaQuery.of(context).size.shortestSide > 600;
+
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -55,10 +60,11 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
             Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                child: Image.asset(
-                  'assets/images/background.png',
-                  fit: BoxFit.cover,
-                )),
+                child: FlareActor(
+                    'assets/animations/eating.flr',
+                    animation: 'move',
+                fit: BoxFit.fill,),
+            ),
 
             BlocBuilder<PubBloc, PubState>(
               bloc: _bloc,
@@ -226,12 +232,14 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                                   children: [
                                                     Icon(
                                                       Icons.star,
-                                                      size: 40,
+                                                      size: isTablet? 40 : 20,
                                                       color: Colors.white,
                                                     ),
                                                     Padding(
                                                       padding: const EdgeInsets.only(left: 8, top: 4),
-                                                      child: Text(_selectedPub.reviewScore + '/6', style: Theme.of(context).textTheme.headline1,),
+                                                      child: Text(_selectedPub.reviewScore + '/6',
+                                                        style: isTablet
+                                                            ? Theme.of(context).textTheme.headline1 : Theme.of(context).textTheme.headline2),
                                                     )
                                                   ],
                                                 ),
