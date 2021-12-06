@@ -307,18 +307,15 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
 //no item selected
                       : Center(
                           child: Container(
-                            color: Colors.red,
+                            padding: EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.black26,
+                              borderRadius: BorderRadius.circular(32)
+                            ),
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(_selectedPub?.name ??
-                                    Strings.noItemSelected),
-                                Text(_selectedPub?.location?.address?.street ??
-                                    'Hovno'),
-                                Text(_selectedPub?.reviewScore.toString() ??
-                                    'no score'),
-                                Text(_selectedPub?.images?.length.toString() ??
-                                    'no images'),
+                                Text(Strings.clickForDetails, style: Theme.of(context).textTheme.headline2,),
                               ],
                             ),
                           ),
