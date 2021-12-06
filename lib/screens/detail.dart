@@ -17,7 +17,6 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
   Pub _selectedPub;
   TabController _tabController;
   List<String> pubPhotosList = [];
-  String actualPhotoUrl;
 
   @override
   void initState() {
@@ -61,23 +60,15 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                 if (state is StatePubsLoadSuccess) {
                   _selectedPub = state.selectedPub;
 
-                  pubPhotosList = [];
+                  if (_selectedPub != null) {
+                    pubPhotosList =
+                        _selectedPub.images?.map((e) => e.url)?.toList();
 
-                  pubPhotosList =
-                      _selectedPub.images?.map((e) => e.url)?.toList();
+                    print(pubPhotosList.length);
 
-                  if (pubPhotosList.isNotEmpty) {
-                    actualPhotoUrl = pubPhotosList[0];
+                    _tabController = TabController(
+                        length: _selectedPub.images.length, vsync: this);
                   }
-
-                  _tabController = TabController(
-                      length: _selectedPub.images.length, vsync: this);
-
-                  _tabController.addListener(() {
-                    setState(() {
-                      actualPhotoUrl = pubPhotosList[_tabController.index];
-                    });
-                  });
 
                   return _selectedPub != null
 
@@ -96,52 +87,16 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                               : TabBarView(
                                   controller: _tabController,
                                   children:
-                                      pubPhotosList.map((String currentURL) {
-                                    return InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          _tabController.index <
-                                                  pubPhotosList.length - 1
-                                              ? _tabController.index++
-                                              : _tabController.index = 0;
-                                        });
-                                      },
-                                      child: Container(
-                                        width: 500,
-                                        height: 500,
-                                        child: FittedBox(
-                                            fit: BoxFit.cover,
-                                            child: Image.network(
-                                              currentURL,
-                                              cacheWidth: 500,
-                                              errorBuilder: (
-                                                BuildContext context,
-                                                Object error,
-                                                StackTrace stackTrace,
-                                              ) {
-                                                if (error.toString().contains(
-                                                    'statusCode: 404')) {
-                                                  print('hovno1');
-                                                  print(error.toString());
-                                                  return Padding(
-                                                      padding:
-                                                          EdgeInsets.all(16),
-                                                      child: Icon(
-                                                        Icons.not_interested,
-                                                        color: Colors.white,
-                                                      ));
-                                                }
-                                                print('hovno2');
-                                                print(error.toString());
-                                                return Padding(
-                                                    padding: EdgeInsets.all(16),
-                                                    child: Icon(
-                                                      Icons.refresh,
-                                                      color: Colors.white,
-                                                    ));
-                                              },
-                                            )),
-                                      ),
+                                      pubPhotosList.map((String url) {
+                                    return Container(
+                                      width: 500,
+                                      height: 500,
+                                      child: FittedBox(
+                                          fit: BoxFit.cover,
+                                          child: Image.network(
+                                            url,
+                                            cacheWidth: 500,
+                                          )),
                                     );
                                   }).toList(),
                                 ),
