@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/io_client.dart';
 import 'package:quandoo_challenge/customWidgets/Pub.dart';
 import 'package:quandoo_challenge/repository/repository.dart';
+import 'package:http/http.dart' as http;
+
 
 import 'pub_barrel.dart';
 
@@ -31,7 +34,7 @@ class PubBloc extends Bloc<PubEvent, PubState> {
     }
     if (event is EventPubsLoad) {
       yield StatePubsLoading(); // to show progress indicator while waiting for the data
-      _pubs = await repository.fetchPubs();
+      _pubs = await repository.fetchPubs(http.Client());
       yield StatePubsLoadSuccess(_pubs, _selected);
     }
   }

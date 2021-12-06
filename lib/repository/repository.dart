@@ -7,10 +7,10 @@ import '../strings.dart';
 
 class Repository {
 
-  Future<List<Pub>> fetchPubs() async {
+  Future<List<Pub>> fetchPubs(http.Client client) async {
 
 
-    final response = await http.get(Uri.parse(Strings.quandooUrl));
+    final response = await client.get(Uri.parse(Strings.quandooAPIUrl));
 
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
