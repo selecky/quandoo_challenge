@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quandoo_challenge/strings.dart';
@@ -114,7 +115,35 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                                 ));
                                           }).toList(),
                                         ),
-//Top curved border
+//Name field
+                                      Positioned(
+                                        bottom: 0,
+                                        child: Container(
+                                          height: 200,
+                                          width: isLandscape ? MediaQuery.of(context).size.width / 2 - 8 : MediaQuery.of(context).size.width,
+                                          padding: const EdgeInsets.only(top: 36),
+
+                                          decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                begin: Alignment.bottomCenter,
+                                                end: Alignment.topCenter,
+                                                colors: [
+                                                  Colors.black.withOpacity(1),
+                                                  Colors.black.withOpacity(0),
+                                                ],
+                                              )),
+                                          child: Center(
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 64, right: 64, top: 8),
+                                              child:
+//Name
+                                              AutoSizeText(_selectedPub.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.headline1),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+
+                                      //Top curved border
                                       Positioned(
                                         bottom: -1,
                                         child: Container(
@@ -128,7 +157,8 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                             boxShadow: [BoxShadow(color: Colors.black38, offset: Offset(4, 4), blurRadius: 16.0, spreadRadius: 4.0)],
                                           ),
                                         ),
-                                      )
+                                      ),
+
                                     ],
                                   ),
                             ),

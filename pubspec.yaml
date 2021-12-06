@@ -26,6 +26,7 @@ dependencies:
   equatable:
   flutter_bloc: 5.0.0
   http:
+  auto_size_text:
 
 
   # The following adds the Cupertino Icons font to your application.
