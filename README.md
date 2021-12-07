@@ -5,13 +5,13 @@ as a Flutter Engineer at [Quandoo](https://www.quandoo.de/en), a German restaura
 
 ## Description
 
-- On initialization, the app checks if the internet connection is available. If yes, then it fetches JSON data from Quandoo's public test API and turns it into
-Restaurant Dart objects. When not, the user is prompted to connect.
-- Main screen is composed of a restaurant cards with main photo and name. These cards are arranged
+- On initialization, the app checks if an internet connection is available. If yes, then it fetches JSON data from Quandoo's public test API and turns it into
+Restaurant Dart objects. If not, then it prompts the user to connect.
+- Main screen of the app is composed of a restaurant cards with main photo and name. These cards are arranged
 in list on mobile and grid on tablets.
 - On card tapping, the user is sent to a detail screen where all the photos of the restaurant
 are available for viewing through swiping. Additionally, restaurant address and rating are displayed.
-- On tablets, the layout is divided into master and detail view.
+- On tablets, both master and detail views are on the same screen.
 
 ## Technical details
 
