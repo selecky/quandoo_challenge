@@ -330,7 +330,9 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(Strings.clickForDetails, style: Theme.of(context).textTheme.headline2,),
+                                Text(Strings.clickForDetails, style: isTablet
+                                    ? Theme.of(context).textTheme.headline2
+                                    : Theme.of(context).textTheme.bodyText1,),
                               ],
                             ),
                           ),

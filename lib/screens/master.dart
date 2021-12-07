@@ -35,117 +35,131 @@ class _MasterState extends State<Master> {
     repository = _bloc.repository;
   }
 
-
   @override
   Widget build(BuildContext context) {
-
-    isLandscape = MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
+    isLandscape =
+        MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
     isTablet = MediaQuery.of(context).size.shortestSide > 600;
 
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
           shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(160), bottomRight: Radius.circular(160))),
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(160),
+                  bottomRight: Radius.circular(160))),
           centerTitle: true,
           title: Text(Strings.pubList),
         ),
         body: Stack(
           children: [
-
 //Background image
             Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                child: FlareActor(
-                  'assets/animations/eating.flr',
-                  animation: 'move',
-                  fit: BoxFit.fill,),),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: FlareActor(
+                'assets/animations/eating.flr',
+                animation: 'move',
+                fit: BoxFit.fill,
+              ),
+            ),
 
             BlocBuilder<PubBloc, PubState>(
-              bloc: _bloc,
+                bloc: _bloc,
                 builder: (context, state) {
-
-                //if there is no internet connection
+                  //if there is no internet connection
                   if (state is StateNoInternet) {
-                    return Center(child: noInternetLayout(_bloc, repository, context));
+                    return Center(
+                        child: noInternetLayout(_bloc, repository, context));
+                  } else if (state is StatePubsLoading) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (state is StatePubsLoadSuccess) {
+                    _pubList = state.pubList;
+                    _selectedPub = state.selectedPub;
+
+                    return GridView.builder(
+                        itemCount: _pubList.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: isTablet ? 2 : 1,
+                            childAspectRatio: 3 / 1.9),
+                        padding: const EdgeInsets.only(
+                            top: 96, bottom: 64, left: 16, right: 16),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: MyPubCard(
+                              pub: _pubList[index],
+                              isHighlighted: _selectedPub == _pubList[index],
+                              onTap: () async {
+                                _bloc.add(EventPubSelect(_pubList[index]));
+                                if (!isLandscape) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Detail()));
+                                }
+                              },
+                            ),
+                          );
+                        });
+
+                    //StatePubsLoadFail
+                  } else {
+                    return Center(child: Text(Strings.errorLoadingPubs));
                   }
-
-              else if (state is StatePubsLoading) {
-                return Center(child: CircularProgressIndicator());
-              } else if (state is StatePubsLoadSuccess) {
-
-                _pubList = state.pubList;
-                _selectedPub = state.selectedPub;
-
-                return GridView.builder(
-                    itemCount: _pubList.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: isTablet? 2 : 1,
-                        childAspectRatio: 3 / 1.9
-                    ),
-                    padding: const EdgeInsets.only(
-                        top: 96, bottom: 64, left: 16, right: 16),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: MyPubCard(
-                          pub: _pubList[index],
-                          isHighlighted: _selectedPub == _pubList[index],
-                          onTap: () async{
-                            _bloc.add(EventPubSelect(_pubList[index]));
-                            if (!isLandscape) {
-                              Navigator.push(context,  MaterialPageRoute(builder: (context) => Detail()));
-                            }
-                          },
-                        ),
-                      );
-                    });
-
-                //StatePubsLoadFail
-              } else {
-                return Center(child: Text(Strings.errorLoadingPubs));
-              }
-
-            }),
+                }),
           ],
         ));
   }
 }
 
-Widget noInternetLayout(Bloc bloc, Repository repository, BuildContext context) {
-  return                     Center(
+Widget noInternetLayout(
+    Bloc bloc, Repository repository, BuildContext context) {
+  return Center(
     child: Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
-          decoration: BoxDecoration(color: Colors.white.withOpacity(0.5), borderRadius: BorderRadius.circular(16)),
+          padding: EdgeInsets.all(16),
+          constraints: BoxConstraints(maxWidth: 400),
+          decoration: BoxDecoration(
+              color: Colors.black26,
+              borderRadius: BorderRadius.circular(16)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: AutoSizeText(
-                  Strings.noInternet
-                  // style: Theme.of(context).textTheme.button,
-                ),
+              Row(
+                children: [
+                  Text(Strings.noInternetShort,
+                      style: Theme.of(context).textTheme.headline2,
+                  ),
+                ],
               ),
+              Container(
+                height: 8,
+              ), //spacer
+              Text(Strings.noInternetLong, style: Theme.of(context).textTheme.bodyText1,),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: InkWell(
-                    onTap: () async{
-
+                    onTap: () async {
                       //check for internet connection
                       bool hasInternet = await repository.hasInternet();
                       if (!hasInternet) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(Strings.noInternet)));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(Strings.noInternetLong)));
                         return;
                       } else {
                         bloc.add(EventPubsLoad());
                       }
-
                     },
-                    child: Text(Strings.tryAgain)
-                ),
+                    child: Container(
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(32),
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        child: Text(Strings.tryAgain.toUpperCase(),
+                          style: Theme.of(context).textTheme.headline5,))),
               )
             ],
           )),

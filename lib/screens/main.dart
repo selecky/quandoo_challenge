@@ -47,10 +47,12 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Rounded',
 
           textTheme: TextTheme(
-            //Biggest text
+            //Biggest white text
             headline1: TextStyle(fontSize: 40.0, color: Colors.white),
-            //App bar text
+            //big white text
             headline2: TextStyle(fontSize: 20.0, color: Colors.white),
+            //small white text
+            bodyText1: TextStyle(fontSize: 16.0, color: Colors.white),
             //Black text
             headline3: TextStyle(
                 fontSize: 20.0,
