@@ -24,3 +24,8 @@ class StatePubsLoadSuccess extends PubState {
   @override
   List<Object> get props => [selectedPub, ...pubList];
 }
+
+class StateNoInternet extends PubState {
+  @override
+  List<Object> get props => [];
+}

@@ -1,6 +1,10 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quandoo_challenge/repository/repository.dart';
 import 'package:quandoo_challenge/strings.dart';
 
 import '../customWidgets/Pub.dart';
@@ -21,12 +25,14 @@ class _MasterState extends State<Master> {
   Pub _selectedPub;
   bool isLandscape;
   bool isTablet;
+  Repository repository;
 
   @override
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<PubBloc>(context);
     _bloc.add(EventPubsLoad());
+    repository = _bloc.repository;
   }
 
 
@@ -59,7 +65,13 @@ class _MasterState extends State<Master> {
             BlocBuilder<PubBloc, PubState>(
               bloc: _bloc,
                 builder: (context, state) {
-              if (state is StatePubsLoading) {
+
+                //if there is no internet connection
+                  if (state is StateNoInternet) {
+                    return Center(child: noInternetLayout(_bloc, repository, context));
+                  }
+
+              else if (state is StatePubsLoading) {
                 return Center(child: CircularProgressIndicator());
               } else if (state is StatePubsLoadSuccess) {
 
@@ -99,4 +111,44 @@ class _MasterState extends State<Master> {
           ],
         ));
   }
+}
+
+Widget noInternetLayout(Bloc bloc, Repository repository, BuildContext context) {
+  return                     Center(
+    child: Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+          decoration: BoxDecoration(color: Colors.white.withOpacity(0.5), borderRadius: BorderRadius.circular(16)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: AutoSizeText(
+                  Strings.noInternet
+                  // style: Theme.of(context).textTheme.button,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: InkWell(
+                    onTap: () async{
+
+                      //check for internet connection
+                      bool hasInternet = await repository.hasInternet();
+                      if (!hasInternet) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(Strings.noInternet)));
+                        return;
+                      } else {
+                        bloc.add(EventPubsLoad());
+                      }
+
+                    },
+                    child: Text(Strings.tryAgain)
+                ),
+              )
+            ],
+          )),
+    ),
+  );
 }

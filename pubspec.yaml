@@ -28,6 +28,8 @@ dependencies:
   http:
   auto_size_text:
   flare_flutter:
+  connectivity:
+  data_connection_checker:
 
 
 

@@ -34,6 +34,14 @@ class PubBloc extends Bloc<PubEvent, PubState> {
     }
     if (event is EventPubsLoad) {
       yield StatePubsLoading(); // to show progress indicator while waiting for the data
+
+      //check for internet connection
+      bool hasInternet = await repository.hasInternet();
+      if (!hasInternet) {
+             yield StateNoInternet();
+        return;
+      }
+
       _pubs = await repository.fetchPubs(http.Client());
       yield StatePubsLoadSuccess(_pubs, _selected);
     }
