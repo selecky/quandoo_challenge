@@ -20,22 +20,23 @@ class _MasterState extends State<Master> {
   PubBloc _bloc;
   List<Pub> _pubList;
   Pub _selectedPub;
-  bool isLandscape;
-  bool isTablet;
-  Repository repository;
+  bool _isLandscape;
+  bool _isTablet;
+  Repository _repository;
 
   @override
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<PubBloc>(context);
-    repository = _bloc.repository;
+    _repository = _bloc.repository;
   }
 
   @override
   Widget build(BuildContext context) {
-    isLandscape =
+
+    _isTablet = MediaQuery.of(context).size.shortestSide > 600;
+    _isLandscape =
         MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
-    isTablet = MediaQuery.of(context).size.shortestSide > 600;
 
     return Scaffold(
         extendBodyBehindAppBar: true,
@@ -66,7 +67,7 @@ class _MasterState extends State<Master> {
                   //if there is no internet connection prompt the user to connect
                   if (state is StateNoInternet) {
                     return Center(
-                        child: noInternetLayout(_bloc, repository, context));
+                        child: noInternetLayout(_bloc, _repository, context));
                   } else if (state is StatePubsLoading) {
                     return Center(child: CircularProgressIndicator());
                   } else if (state is StatePubsLoadSuccess) {
@@ -76,7 +77,7 @@ class _MasterState extends State<Master> {
                     return GridView.builder(
                         itemCount: _pubList.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: isTablet ? 2 : 1,
+                            crossAxisCount: _isTablet ? 2 : 1,
                             childAspectRatio: 3 / 1.82),
                         padding: const EdgeInsets.only(
                             top: 96, bottom: 64, left: 16, right: 16),
@@ -88,7 +89,7 @@ class _MasterState extends State<Master> {
                               isHighlighted: _selectedPub == _pubList[index],
                               onTap: () async {
                                 _bloc.add(EventPubSelect(_pubList[index]));
-                                if (!isLandscape) {
+                                if (!_isLandscape) {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -109,7 +110,7 @@ class _MasterState extends State<Master> {
                           borderRadius: BorderRadius.circular(32)),
                       child: Text(
                         Strings.errorLoadingPubs,
-                        style: isTablet
+                        style: _isTablet
                             ? Theme.of(context).textTheme.headline2
                             : Theme.of(context).textTheme.bodyText1,
                       ),

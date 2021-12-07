@@ -18,16 +18,17 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
   PubBloc _bloc;
   Pub _selectedPub;
   TabController _tabController;
-  List<String> pubPhotosList = [];
-  AnimationController _controllerReview;
-  bool isTablet;
+  List<String> _pubPhotosList = [];
+  AnimationController _controllerIntro;
+  bool _isTablet;
+  bool _isLandscape;
 
   @override
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<PubBloc>(context);
 
-    _controllerReview = AnimationController(
+    _controllerIntro = AnimationController(
         duration: Duration(milliseconds: 3000), vsync: this);
 
   }
@@ -35,25 +36,18 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
   @override
   void dispose() {
     _tabController?.dispose();
-    _controllerReview.dispose();
+    _controllerIntro.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
 
-    isTablet = MediaQuery.of(context).size.shortestSide > 600;
+    _isTablet = MediaQuery.of(context).size.shortestSide > 600;
+    _isLandscape =
+        MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
 
     return Scaffold(
-        extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(160),
-                  bottomRight: Radius.circular(160))),
-          centerTitle: true,
-          title: Text(Strings.pubDetail),
-        ),
         body: Stack(
           children: [
 //Background animation image
@@ -74,15 +68,12 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                   _selectedPub = state.selectedPub;
 
                   //restart review animation on each new restaurant click
-                  _controllerReview.reset();
-                  _controllerReview.forward();
-
-                  bool isLandscape = MediaQuery.of(context).size.width >
-                      MediaQuery.of(context).size.height;
+                  _controllerIntro.reset();
+                  _controllerIntro.forward();
 
                   if (_selectedPub != null) {
                     //convert List<PhotoUrl> to List<String>
-                    pubPhotosList =
+                    _pubPhotosList =
                         _selectedPub.images?.map((e) => e.url)?.toList();
 
                     _tabController = TabController(
@@ -98,14 +89,14 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                               child: Stack(
                                       children: [
 //photos
-                                        pubPhotosList.isNotEmpty
+                                        _pubPhotosList.isNotEmpty
                                             ? TabBarView(
                                           //without key the TabBarView index does not reset on new restaurant click
-                                          key: ObjectKey(pubPhotosList[0]),
+                                          key: ObjectKey(_pubPhotosList[0]),
 
                                           controller: _tabController,
                                           children:
-                                              pubPhotosList.map((String url) {
+                                              _pubPhotosList.map((String url) {
                                             return FittedBox(
                                                 fit: BoxFit.cover,
                                                 child: Image.network(
@@ -130,7 +121,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                           bottom: 0,
                                           child: Container(
                                             height: 80,
-                                            width: isLandscape
+                                            width: _isLandscape
                                                 ? MediaQuery.of(context)
                                                             .size
                                                             .width /
@@ -176,7 +167,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                         Positioned(
                                           bottom: -1,
                                           child: Container(
-                                            width: isLandscape
+                                            width: _isLandscape
                                                 ? MediaQuery.of(context)
                                                             .size
                                                             .width /
@@ -205,14 +196,59 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                           ),
                                         ),
 
+//Back Arrow button animated
+                                        Visibility(
+                                          visible: !_isLandscape,
+                                          child: Positioned(
+                                            top: 40,
+                                            left: _isTablet? 32 : 16,
+                                            child: InkWell(
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: AnimatedBuilder(
+                                                animation: _controllerIntro,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(32),
+                                                      color: Colors.black26
+                                                  ),
+                                                  width: _isTablet? 64 : 40,
+                                                  height: _isTablet? 64 : 40,
+                                                  child: Padding(
+                                                    padding: _isTablet
+                                                        ? const EdgeInsets.only(left: 16)
+                                                        : const EdgeInsets.only(left: 8),
+                                                    child: Icon(
+                                                      Icons.arrow_back_ios,
+                                                      size: _isTablet? 40 : 20,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ),
+                                                builder: (context, child) {
+                                                  return Transform(
+                                                      child: child,
+                                            transform: Matrix4.translationValues(
+                                                Tween<double>(begin: -60, end: 0)
+                                                              .animate(CurvedAnimation(parent: _controllerIntro, curve: Interval(0, 1, curve: Curves.elasticOut)))
+                                                              .value,
+                                                          0,
+                                                          0));
+                                                },
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+
 //review - animated
                                         Positioned(
-                                            top: 120,
-                                            right: 32,
+                                            top: 40,
+                                            right: _isTablet? 32 : 16,
                                             child: AnimatedBuilder(
-                                              animation: _controllerReview,
+                                              animation: _controllerIntro,
                                               child: Container(
-                                                padding: EdgeInsets.symmetric(horizontal:  isTablet? 20 : 12, vertical: 8),
+                                                padding: EdgeInsets.symmetric(horizontal:  _isTablet? 20 : 12, vertical: 8),
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(32),
                                                   color: Colors.black26
@@ -221,13 +257,13 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                                   children: [
                                                     Icon(
                                                       Icons.star,
-                                                      size: isTablet? 40 : 20,
+                                                      size: _isTablet? 40 : 20,
                                                       color: Colors.white,
                                                     ),
                                                     Padding(
                                                       padding: const EdgeInsets.only(left: 8, top: 4),
                                                       child: Text(_selectedPub.reviewScore + '/6',
-                                                        style: isTablet
+                                                        style: _isTablet
                                                             ? Theme.of(context).textTheme.headline1 : Theme.of(context).textTheme.headline2),
                                                     )
                                                   ],
@@ -242,7 +278,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                                                 end: 0)
                                                             .animate(CurvedAnimation(
                                                                 parent:
-                                                                    _controllerReview,
+                                                                    _controllerIntro,
                                                                 curve: Interval(
                                                                     0, 1,
                                                                     curve: Curves
@@ -267,7 +303,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                 children: [
                                   AutoSizeText(
                                     Strings.address,
-                                    style: isTablet
+                                    style: _isTablet
                                         ? Theme.of(context).textTheme.headline3
                                         : Theme.of(context).textTheme.headline5
                                   ),
@@ -279,13 +315,13 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                       _selectedPub.location.address.street +
                                           ' ' +
                                           _selectedPub.location.address.number,
-                                      style: isTablet
+                                      style: _isTablet
                                           ? Theme.of(context).textTheme.headline4
                                           : Theme.of(context).textTheme.headline6
                                   ),
 //district
                                   AutoSizeText(_selectedPub.location.address.district,
-                                      style: isTablet
+                                      style: _isTablet
                                           ? Theme.of(context).textTheme.headline4
                                           : Theme.of(context).textTheme.headline6
                                   ),
@@ -294,13 +330,13 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                       _selectedPub.location.address.zipcode +
                                           ' ' +
                                           _selectedPub.location.address.city,
-                                      style: isTablet
+                                      style: _isTablet
                                           ? Theme.of(context).textTheme.headline4
                                           : Theme.of(context).textTheme.headline6
                                   ),
 //country
                                   AutoSizeText(_selectedPub.location.address.country,
-                                      style: isTablet
+                                      style: _isTablet
                                           ? Theme.of(context).textTheme.headline4
                                           : Theme.of(context).textTheme.headline6
                                   ),
@@ -321,7 +357,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(Strings.clickForDetails, style: isTablet
+                                Text(Strings.clickForDetails, style: _isTablet
                                     ? Theme.of(context).textTheme.headline2
                                     : Theme.of(context).textTheme.bodyText1,),
                               ],

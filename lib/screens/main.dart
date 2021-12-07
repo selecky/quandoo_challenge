@@ -88,11 +88,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
     isLandscape = MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
 
-    //force portrait orientation on mobile
+    //force portrait orientation on mobile and landscape on tablet
     if(MediaQuery.of(context).size.shortestSide < 600){
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
+      ]);
+    } else {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
       ]);
     }
 
