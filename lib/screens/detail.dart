@@ -245,7 +245,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                             child: AnimatedBuilder(
                                               animation: _controllerIntro,
                                               child: Container(
-                                                padding: EdgeInsets.symmetric(horizontal:  _isTablet? 20 : 12, vertical: 8),
+                                                padding: EdgeInsets.symmetric(horizontal:  _isTablet? 16 : 12, vertical: 8),
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(32),
                                                   color: Colors.black26
@@ -254,14 +254,15 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                                   children: [
                                                     Icon(
                                                       Icons.star,
-                                                      size: _isTablet? 40 : 20,
+                                                      size: _isTablet? 32 : 20,
                                                       color: Colors.white,
                                                     ),
                                                     Padding(
                                                       padding: const EdgeInsets.only(left: 8, top: 4),
                                                       child: Text(_selectedPub.reviewScore + '/6',
                                                         style: _isTablet
-                                                            ? Theme.of(context).textTheme.headline1 : Theme.of(context).textTheme.headline2),
+                                                            ? Theme.of(context).textTheme.headline1.copyWith(fontSize: 32)
+                                                            : Theme.of(context).textTheme.headline2),
                                                     )
                                                   ],
                                                 ),
