@@ -20,6 +20,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    //to make statusBar and systemNavigationBar dark
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle.dark
+    );
+
     return BlocProvider(
       create: (context) => PubBloc(repository: repository)..add(EventPubsLoad()),//initialize the app with an API call
       child: MaterialApp(

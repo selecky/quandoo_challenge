@@ -212,7 +212,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                             child: AnimatedBuilder(
                                               animation: _controllerReview,
                                               child: Container(
-                                                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                                                padding: EdgeInsets.symmetric(horizontal:  isTablet? 20 : 12, vertical: 8),
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(32),
                                                   color: Colors.black26
