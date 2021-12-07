@@ -77,7 +77,7 @@ class _MasterState extends State<Master> {
                         itemCount: _pubList.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: isTablet ? 2 : 1,
-                            childAspectRatio: 3 / 1.9),
+                            childAspectRatio: 3 / 1.82),
                         padding: const EdgeInsets.only(
                             top: 96, bottom: 64, left: 16, right: 16),
                         itemBuilder: (BuildContext context, int index) {

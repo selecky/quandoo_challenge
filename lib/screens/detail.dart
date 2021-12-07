@@ -129,7 +129,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                         Positioned(
                                           bottom: 0,
                                           child: Container(
-                                            height: 200,
+                                            height: 80,
                                             width: isLandscape
                                                 ? MediaQuery.of(context)
                                                             .size
@@ -139,34 +139,35 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                                 : MediaQuery.of(context)
                                                     .size
                                                     .width,
-                                            padding:
-                                                const EdgeInsets.only(top: 36),
                                             decoration: BoxDecoration(
                                                 gradient: LinearGradient(
                                               begin: Alignment.bottomCenter,
                                               end: Alignment.topCenter,
                                               colors: [
-                                                Colors.black.withOpacity(1),
+                                                Colors.black.withOpacity(0.8),
                                                 Colors.black.withOpacity(0),
                                               ],
                                             )),
-                                            child: Center(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 64,
-                                                    right: 64,
-                                                    top: 8),
-                                                child:
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 40,
+                                                  right: 40,
+                                                  ),
+                                              child:
 //Name
-                                                    AutoSizeText(
-                                                        _selectedPub.name,
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .headline1),
-                                              ),
+                                              //using column to top-center the name in gradient background
+                                              Column(
+                                                    children: [
+                                                      AutoSizeText(
+                                                          _selectedPub.name,
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: Theme.of(context)
+                                                              .textTheme
+                                                              .headline1),
+                                                    ],
+                                                  ),
                                             ),
                                           ),
                                         ),
