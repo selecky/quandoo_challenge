@@ -1,5 +1,5 @@
 
-
+//strings used in the app
 class Strings {
 
   static String quandooAPIUrl = 'https://api.quandoo.com/v1/merchants';

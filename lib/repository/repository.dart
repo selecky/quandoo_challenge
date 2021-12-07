@@ -9,6 +9,7 @@ import '../strings.dart';
 
 class Repository {
 
+  //checking if the internet connection is available
   Future<bool> hasInternet() async {
 
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -41,7 +42,7 @@ class Repository {
   }
 
 
-
+  //making API call to fetch restaurants data and convert them into a list of Dart objects
   Future<List<Pub>> fetchPubs(http.Client client) async {
 
     final response = await client.get(Uri.parse(Strings.quandooAPIUrl));

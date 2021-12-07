@@ -56,7 +56,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
         ),
         body: Stack(
           children: [
-//Background image
+//Background animation image
             Container(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
@@ -73,6 +73,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
 
                   _selectedPub = state.selectedPub;
 
+                  //restart review animation on each new restaurant click
                   _controllerReview.reset();
                   _controllerReview.forward();
 
@@ -80,6 +81,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                       MediaQuery.of(context).size.height;
 
                   if (_selectedPub != null) {
+                    //convert List<PhotoUrl> to List<String>
                     pubPhotosList =
                         _selectedPub.images?.map((e) => e.url)?.toList();
 
@@ -94,10 +96,9 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height * 0.7,
                               child: Stack(
-                                      children: [
-                                        //Support containers for immediate caching of all restaurant images (invisible)
-                                        // - this helps to prevent bad UX when scrolling the tabBarView
-                                        pubPhotosList.isNotEmpty
+                                      children: [ pubPhotosList.isNotEmpty
+                                      //Support containers (invisible for user) for immediate caching of all restaurant images
+                                      // - this helps to prevent bad UX when scrolling the tabBarView - minimizing photo loading time
                                             ? Column(
                                           children: pubPhotosList
                                               .map((String photoUrl) {
@@ -109,10 +110,15 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                                   cacheWidth: 500,
                                                 ));
                                           }).toList(),
-                                        ) : Container(),//empty container when no photos available
-                                        pubPhotosList.isNotEmpty? TabBarView(
-                                          key: ObjectKey(pubPhotosList[0]),
+                                        )
+                                      //empty container when no photos available
+                                          : Container(),
+//photos
+                                        pubPhotosList.isNotEmpty
+                                            ? TabBarView(
                                           //without key the TabBarView index does not reset on new restaurant click
+                                          key: ObjectKey(pubPhotosList[0]),
+
                                           controller: _tabController,
                                           children:
                                               pubPhotosList.map((String url) {
@@ -123,7 +129,8 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                                   cacheWidth: 500,
                                                 ));
                                           }).toList(),
-                                        ) : Container( //yellow container with icon when no photos available
+                                          //yellow container with icon when no photos available
+                                        ) : Container(
                                           width: MediaQuery.of(context).size.width,
                                           height:
                                           MediaQuery.of(context).size.height *
@@ -197,7 +204,6 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                             decoration: BoxDecoration(
                                               color:
                                                   Theme.of(context).canvasColor,
-                                              // Strings.myColorGrey,
                                               borderRadius: BorderRadius.only(
                                                   topRight:
                                                       Radius.circular(150),

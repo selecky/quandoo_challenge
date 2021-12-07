@@ -49,7 +49,7 @@ class _MasterState extends State<Master> {
         ),
         body: Stack(
           children: [
-//Background image
+//Background animation
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
@@ -63,7 +63,7 @@ class _MasterState extends State<Master> {
             BlocBuilder<PubBloc, PubState>(
                 bloc: _bloc,
                 builder: (context, state) {
-                  //if there is no internet connection
+                  //if there is no internet connection prompt the user to connect
                   if (state is StateNoInternet) {
                     return Center(
                         child: noInternetLayout(_bloc, repository, context));
@@ -99,9 +99,21 @@ class _MasterState extends State<Master> {
                           );
                         });
 
-                    //StatePubsLoadFail
+//StatePubsLoadFail - API all failed
                   } else {
-                    return Center(child: Text(Strings.errorLoadingPubs));
+                    return Center(
+                        child: Container(
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: Colors.black26,
+                          borderRadius: BorderRadius.circular(32)),
+                      child: Text(
+                        Strings.errorLoadingPubs,
+                        style: isTablet
+                            ? Theme.of(context).textTheme.headline2
+                            : Theme.of(context).textTheme.bodyText1,
+                      ),
+                    ));
                   }
                 }),
           ],
@@ -109,6 +121,7 @@ class _MasterState extends State<Master> {
   }
 }
 
+//Layout displayed when no internet connection is found
 Widget noInternetLayout(
     Bloc bloc, Repository repository, BuildContext context) {
   return Center(
@@ -118,22 +131,27 @@ Widget noInternetLayout(
           padding: EdgeInsets.all(16),
           constraints: BoxConstraints(maxWidth: 400),
           decoration: BoxDecoration(
-              color: Colors.black26,
-              borderRadius: BorderRadius.circular(16)),
+              color: Colors.black26, borderRadius: BorderRadius.circular(16)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Row(
                 children: [
-                  Text(Strings.noInternetShort,
-                      style: Theme.of(context).textTheme.headline2,
+                  Text(
+                    Strings.noInternetShort,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                 ],
               ),
+              //spacer
               Container(
                 height: 8,
-              ), //spacer
-              Text(Strings.noInternetLong, style: Theme.of(context).textTheme.bodyText1,),
+              ),
+              Text(
+                Strings.noInternetLong,
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+//try again button
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: InkWell(
@@ -145,6 +163,7 @@ Widget noInternetLayout(
                             SnackBar(content: Text(Strings.noInternetLong)));
                         return;
                       } else {
+                        //if there is internet, make the API call
                         bloc.add(EventPubsLoad());
                       }
                     },
@@ -154,8 +173,10 @@ Widget noInternetLayout(
                           borderRadius: BorderRadius.circular(32),
                           color: Theme.of(context).primaryColor,
                         ),
-                        child: Text(Strings.tryAgain.toUpperCase(),
-                          style: Theme.of(context).textTheme.headline5,))),
+                        child: Text(
+                          Strings.tryAgain.toUpperCase(),
+                          style: Theme.of(context).textTheme.headline5,
+                        ))),
               )
             ],
           )),
