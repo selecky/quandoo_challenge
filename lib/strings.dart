@@ -5,8 +5,8 @@ class Strings {
   static String quandooAPIUrl = 'https://api.quandoo.com/v1/merchants';
 
   static String title = 'Quandoo Challenge';
-  static String pubList = 'List of Restaurants';
-  static String pubDetail = 'Restaurant detail';
+  static String pubList = 'Restaurants';
+  static String pubDetail = 'Detail';
   static String errorLoadingPubs = 'Error during loading of restaurants';
   static String clickForDetails = 'Click on some restaurant for details';
   static String address = 'Address';
