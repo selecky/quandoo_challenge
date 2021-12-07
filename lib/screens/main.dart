@@ -81,30 +81,30 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  bool isLandscape;
+  bool _isTablet;
 
   @override
   Widget build(BuildContext context) {
 
-    isLandscape = MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
+    _isTablet = MediaQuery.of(context).size.shortestSide > 600;
 
     //force portrait orientation on mobile and landscape on tablet
-    if(MediaQuery.of(context).size.shortestSide < 600){
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-    } else {
+    if(_isTablet){
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
+      ]);
+    } else {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
       ]);
     }
 
 
     return LayoutBuilder(
         builder: (context, constraints) {
-          if (isLandscape) {
+          if (_isTablet) {
             return TabletView();
           } else {
             return MobileView();

@@ -21,7 +21,6 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
   List<String> _pubPhotosList = [];
   AnimationController _controllerIntro;
   bool _isTablet;
-  bool _isLandscape;
 
   @override
   void initState() {
@@ -44,8 +43,6 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
 
     _isTablet = MediaQuery.of(context).size.shortestSide > 600;
-    _isLandscape =
-        MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
 
     return Scaffold(
         body: Stack(
@@ -121,7 +118,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                           bottom: 0,
                                           child: Container(
                                             height: 80,
-                                            width: _isLandscape
+                                            width: _isTablet
                                                 ? MediaQuery.of(context)
                                                             .size
                                                             .width /
@@ -167,7 +164,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                         Positioned(
                                           bottom: -1,
                                           child: Container(
-                                            width: _isLandscape
+                                            width: _isTablet
                                                 ? MediaQuery.of(context)
                                                             .size
                                                             .width /
@@ -198,7 +195,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
 
 //Back Arrow button animated
                                         Visibility(
-                                          visible: !_isLandscape,
+                                          visible: !_isTablet,
                                           child: Positioned(
                                             top: 40,
                                             left: _isTablet? 32 : 16,

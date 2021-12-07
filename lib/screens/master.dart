@@ -20,7 +20,6 @@ class _MasterState extends State<Master> {
   PubBloc _bloc;
   List<Pub> _pubList;
   Pub _selectedPub;
-  bool _isLandscape;
   bool _isTablet;
   Repository _repository;
 
@@ -35,8 +34,6 @@ class _MasterState extends State<Master> {
   Widget build(BuildContext context) {
 
     _isTablet = MediaQuery.of(context).size.shortestSide > 600;
-    _isLandscape =
-        MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
 
     return Scaffold(
         extendBodyBehindAppBar: true,
@@ -89,7 +86,7 @@ class _MasterState extends State<Master> {
                               isHighlighted: _selectedPub == _pubList[index],
                               onTap: () async {
                                 _bloc.add(EventPubSelect(_pubList[index]));
-                                if (!_isLandscape) {
+                                if (!_isTablet) {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
