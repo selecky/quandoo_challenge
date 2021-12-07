@@ -9,7 +9,7 @@ import 'package:quandoo_challenge/strings.dart';
 import '../blocs/pub_barrel.dart';
 
 void main() {
-  BlocSupervisor.delegate = SimpleBlocDelegate();
+  BlocSupervisor.delegate = SimpleBlocDelegate();//monitors bloc functionality
   runApp(MyApp());
 }
 
@@ -21,28 +21,18 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PubBloc(repository: repository),
+      create: (context) => PubBloc(repository: repository)..add(EventPubsLoad()),//initialize the app with an API call
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: Strings.title,
         theme: ThemeData(
 
           primarySwatch: Colors.amber,
-
           primaryColor: Colors.amber[600],
           primaryColorDark: Colors.amber[700],
           primaryColorLight: Colors.amber,
-
-          // secondary color
           accentColor: Color(0xfffdd835),
-
-          // secondary color Light
           highlightColor: Color(0xffffeb3b),
-
-          // primary color Dark
-          hintColor: Color(0xff4a148c),
-
-          buttonColor: Colors.black.withOpacity(0.75),
 
           fontFamily: 'Rounded',
 
@@ -92,6 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     isLandscape = MediaQuery.of(context).size.width > MediaQuery.of(context).size.height;
 
+    //force portrait orientation on mobile
     if(MediaQuery.of(context).size.shortestSide < 600){
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
@@ -125,7 +116,7 @@ class TabletView extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(child: Master()),
-        Container(width: 16, height: MediaQuery.of(context).size.height),
+        Container(width: 16, height: MediaQuery.of(context).size.height),//divider
         Expanded(child: Detail())
       ],
     );

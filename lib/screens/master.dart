@@ -1,14 +1,11 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flare_flutter/flare_actor.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quandoo_challenge/repository/repository.dart';
 import 'package:quandoo_challenge/strings.dart';
 
-import '../customWidgets/Pub.dart';
 import '../blocs/pub_barrel.dart';
+import '../customWidgets/Pub.dart';
 import '../customWidgets/myPubCard.dart';
 import 'detail.dart';
 
@@ -31,7 +28,6 @@ class _MasterState extends State<Master> {
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<PubBloc>(context);
-    _bloc.add(EventPubsLoad());
     repository = _bloc.repository;
   }
 
