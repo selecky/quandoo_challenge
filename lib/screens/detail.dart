@@ -96,23 +96,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height * 0.7,
                               child: Stack(
-                                      children: [ pubPhotosList.isNotEmpty
-                                      //Support containers (invisible for user) for immediate caching of all restaurant images
-                                      // - this helps to prevent bad UX when scrolling the tabBarView - minimizing photo loading time
-                                            ? Column(
-                                          children: pubPhotosList
-                                              .map((String photoUrl) {
-                                            return Container(
-                                                width: 0,
-                                                height: 0,
-                                                child: Image.network(
-                                                  photoUrl,
-                                                  cacheWidth: 500,
-                                                ));
-                                          }).toList(),
-                                        )
-                                      //empty container when no photos available
-                                          : Container(),
+                                      children: [
 //photos
                                         pubPhotosList.isNotEmpty
                                             ? TabBarView(

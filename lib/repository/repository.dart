@@ -42,7 +42,7 @@ class Repository {
   }
 
 
-  //making API call to fetch restaurants data and convert them into a list of Dart objects
+  //making API call to fetch restaurants data and converting them into a list of Dart objects
   Future<List<Pub>> fetchPubs(http.Client client) async {
 
     final response = await client.get(Uri.parse(Strings.quandooAPIUrl));
