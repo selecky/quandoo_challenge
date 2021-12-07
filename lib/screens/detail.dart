@@ -274,7 +274,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  AutoSizeText(
                                     Strings.address,
                                     style: isTablet
                                         ? Theme.of(context).textTheme.headline3
@@ -284,7 +284,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                     height: 8,
                                   ), //spacer
 //street + number
-                                  Text(
+                                  AutoSizeText(
                                       _selectedPub.location.address.street +
                                           ' ' +
                                           _selectedPub.location.address.number,
@@ -293,13 +293,13 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                           : Theme.of(context).textTheme.headline6
                                   ),
 //district
-                                  Text(_selectedPub.location.address.district,
+                                  AutoSizeText(_selectedPub.location.address.district,
                                       style: isTablet
                                           ? Theme.of(context).textTheme.headline4
                                           : Theme.of(context).textTheme.headline6
                                   ),
 //zipcode
-                                  Text(
+                                  AutoSizeText(
                                       _selectedPub.location.address.zipcode +
                                           ' ' +
                                           _selectedPub.location.address.city,
@@ -308,7 +308,7 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                           : Theme.of(context).textTheme.headline6
                                   ),
 //country
-                                  Text(_selectedPub.location.address.country,
+                                  AutoSizeText(_selectedPub.location.address.country,
                                       style: isTablet
                                           ? Theme.of(context).textTheme.headline4
                                           : Theme.of(context).textTheme.headline6
