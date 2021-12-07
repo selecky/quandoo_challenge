@@ -9,7 +9,6 @@ class Repository {
 
   Future<List<Pub>> fetchPubs(http.Client client) async {
 
-
     final response = await client.get(Uri.parse(Strings.quandooAPIUrl));
 
     if (response.statusCode == 200) {
@@ -23,8 +22,6 @@ class Repository {
 
       var pubMapList =
           List<Map<String, dynamic>>.from(responseBodyMap["merchants"]);
-
-
 
       loadedPubs = pubMapList.map((Map<String, dynamic> pubMap) {
 

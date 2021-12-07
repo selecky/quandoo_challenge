@@ -58,10 +58,10 @@ class MyApp extends StatelessWidget {
                 ),
             //Grey text
             headline4: TextStyle(fontSize: 20.0),
-            //White text
-            headline5: TextStyle(fontSize: 14.0, color: Colors.white),
-            //App bar text - black
-            headline6: TextStyle(fontSize: 14.0,),
+            //black small text
+            headline5: TextStyle(fontSize: 16.0, color: Colors.black),
+            //grey small text
+            headline6: TextStyle(fontSize: 16.0, color: Colors.grey),
           ),
 
 

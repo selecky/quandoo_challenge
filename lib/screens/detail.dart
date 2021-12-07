@@ -93,24 +93,12 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                             Container(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height * 0.7,
-                              child: pubPhotosList.isEmpty
-                                  //display only icon when no photos for restaurant available
-                                  ? Container(
-                                      width: MediaQuery.of(context).size.width,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              0.7,
-                                      color: Theme.of(context).primaryColor,
-                                      child: Icon(
-                                        Icons.deck_rounded,
-                                        size: 200,
-                                      ),
-                                    )
-                                  : Stack(
+                              child: Stack(
                                       children: [
                                         //Support containers for immediate caching of all restaurant images (invisible)
                                         // - this helps to prevent bad UX when scrolling the tabBarView
-                                        Column(
+                                        pubPhotosList.isNotEmpty
+                                            ? Column(
                                           children: pubPhotosList
                                               .map((String photoUrl) {
                                             return Container(
@@ -121,8 +109,8 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                                   cacheWidth: 500,
                                                 ));
                                           }).toList(),
-                                        ),
-                                        TabBarView(
+                                        ) : Container(),//empty container when no photos available
+                                        pubPhotosList.isNotEmpty? TabBarView(
                                           key: ObjectKey(pubPhotosList[0]),
                                           //without key the TabBarView index does not reset on new restaurant click
                                           controller: _tabController,
@@ -135,6 +123,16 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                                   cacheWidth: 500,
                                                 ));
                                           }).toList(),
+                                        ) : Container( //yellow container with icon when no photos available
+                                          width: MediaQuery.of(context).size.width,
+                                          height:
+                                          MediaQuery.of(context).size.height *
+                                              0.7,
+                                          color: Theme.of(context).primaryColor,
+                                          child: Icon(
+                                            Icons.deck_rounded,
+                                            size: 200,
+                                          ),
                                         ),
 //Name field
                                         Positioned(
@@ -278,34 +276,43 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
                                 children: [
                                   Text(
                                     Strings.address,
-                                    style:
-                                        Theme.of(context).textTheme.headline3,
+                                    style: isTablet
+                                        ? Theme.of(context).textTheme.headline3
+                                        : Theme.of(context).textTheme.headline5
                                   ),
                                   Container(
                                     height: 8,
                                   ), //spacer
+//street + number
                                   Text(
                                       _selectedPub.location.address.street +
                                           ' ' +
                                           _selectedPub.location.address.number,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4),
+                                      style: isTablet
+                                          ? Theme.of(context).textTheme.headline4
+                                          : Theme.of(context).textTheme.headline6
+                                  ),
+//district
                                   Text(_selectedPub.location.address.district,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4),
+                                      style: isTablet
+                                          ? Theme.of(context).textTheme.headline4
+                                          : Theme.of(context).textTheme.headline6
+                                  ),
+//zipcode
                                   Text(
                                       _selectedPub.location.address.zipcode +
                                           ' ' +
                                           _selectedPub.location.address.city,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4),
+                                      style: isTablet
+                                          ? Theme.of(context).textTheme.headline4
+                                          : Theme.of(context).textTheme.headline6
+                                  ),
+//country
                                   Text(_selectedPub.location.address.country,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4),
+                                      style: isTablet
+                                          ? Theme.of(context).textTheme.headline4
+                                          : Theme.of(context).textTheme.headline6
+                                  ),
                                 ],
                               ),
                             )
