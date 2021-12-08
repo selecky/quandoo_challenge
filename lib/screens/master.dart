@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,14 +38,6 @@ class _MasterState extends State<Master> {
 
     return Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: AppBar(
-          shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(160),
-                  bottomRight: Radius.circular(160))),
-          centerTitle: true,
-          title: Text(Strings.pubList),
-        ),
         body: Stack(
           children: [
 //Background animation
@@ -71,31 +64,73 @@ class _MasterState extends State<Master> {
                     _pubList = state.pubList;
                     _selectedPub = state.selectedPub;
 
-                    return GridView.builder(
-                        itemCount: _pubList.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: _isTablet ? 2 : 1,
-                            childAspectRatio: 3 / 1.82),
-                        padding: const EdgeInsets.only(
-                            top: 96, bottom: 64, left: 16, right: 16),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: MyPubCard(
-                              pub: _pubList[index],
-                              isHighlighted: _selectedPub == _pubList[index],
-                              onTap: () async {
-                                _bloc.add(EventPubSelect(_pubList[index]));
-                                if (!_isTablet) {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Detail()));
-                                }
-                              },
+                    return RawScrollbar(
+                      radius: Radius.circular(16),
+                      thumbColor: Theme.of(context).primaryColor,
+                      child: CustomScrollView(
+                        slivers: [
+                          SliverAppBar(
+                            shape: ContinuousRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(160),
+                                    bottomRight: Radius.circular(160))),
+                            centerTitle: true,
+                            pinned: false,
+                            floating: true,
+                            expandedHeight: 64.0,
+                            flexibleSpace: FlexibleSpaceBar(
+                              title: Padding(
+                                padding: EdgeInsets.only(right: 48),
+                                //row used to center title
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    AutoSizeText(
+                                      Strings.pubList,
+                                      style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 16),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          );
-                        });
+                          ),
+                          //container to add some space at the top of the gridView
+                          SliverToBoxAdapter(
+                              child: Container(
+                                  height: 16,
+                                 )),
+                          SliverGrid(
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: _isTablet ? 2 : 1,
+                                childAspectRatio: 3 / 1.82,
+                                // mainAxisSpacing: 8.0,
+                                // crossAxisSpacing: 8.0,
+                              ),
+                              delegate: SliverChildBuilderDelegate (
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: MyPubCard(
+                                        pub: _pubList[index],
+                                        isHighlighted: _selectedPub == _pubList[index],
+                                        onTap: () async {
+                                          _bloc.add(EventPubSelect(_pubList[index]));
+                                          if (!_isTablet) {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => Detail()));
+                                          }
+                                        },
+                                      ),
+                                    );
+                                  },
+                                childCount: _pubList.length,
+                              ) ),
+                        ],
+                      ),
+                    );
 
 //StatePubsLoadFail - API all failed
                   } else {
