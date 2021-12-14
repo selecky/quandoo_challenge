@@ -42,7 +42,14 @@ packages:
       name: bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "8.0.1"
+  bloc_test:
+    dependency: "direct main"
+    description:
+      name: bloc_test
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "9.0.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -225,6 +232,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.4"
+  diff_match_patch:
+    dependency: transitive
+    description:
+      name: diff_match_patch
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.1"
   equatable:
     dependency: "direct main"
     description:
@@ -271,7 +285,7 @@ packages:
       name: flutter_bloc
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "8.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -380,6 +394,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.15"
+  mocktail:
+    dependency: transitive
+    description:
+      name: mocktail
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   nested:
     dependency: transitive
     description:
@@ -435,7 +456,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.3"
+    version: "6.0.1"
   pub_semver:
     dependency: transitive
     description:

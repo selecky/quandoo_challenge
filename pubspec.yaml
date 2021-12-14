@@ -24,12 +24,13 @@ dependencies:
   flutter:
     sdk: flutter
   equatable:
-  flutter_bloc: 4.0.0
+  flutter_bloc:
   http:
   auto_size_text:
   flare_flutter:
   connectivity:
   data_connection_checker:
+  bloc_test:
 
 
 

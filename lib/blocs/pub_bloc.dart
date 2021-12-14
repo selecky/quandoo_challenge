@@ -13,7 +13,7 @@ class PubBloc extends Bloc<PubEvent, PubState> {
   Pub _selected;
   final Repository repository;
 
-  PubBloc({@required this.repository, PubState initialState});
+  PubBloc({@required this.repository, PubState initialState}) : super(null);
 
   PubState get initialState => StatePubsLoading();
 
