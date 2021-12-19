@@ -13,36 +13,30 @@ class PubBloc extends Bloc<PubEvent, PubState> {
   Pub _selected;
   final Repository repository;
 
-  PubBloc({@required this.repository, PubState initialState}) : super(null);
+  PubBloc({@required this.repository}) : super(null) {
 
-  PubState get initialState => StatePubsLoading();
+    on<EventPubsLoad>(
+      (event, emit) async {
+        emit(StatePubsLoading()); // to show progress indicator while waiting for the data)
+        //check for internet connection
+        bool hasInternet = await repository.hasInternet();
+        if (!hasInternet) {
+          emit(StateNoInternet());
+          return;
+        }
+        _pubs = await repository.fetchPubs(http.Client());
+        emit(StatePubsLoadSuccess(_pubs, _selected));
+      },
+    );
 
-  @override
-  Stream<PubState> mapEventToState(
-    PubEvent event,
-  ) async* {
-    if (event is EventPubSelect) {
-      _selected = event.selected;
-
-      if(state is StatePubsLoadSuccess){
-        _pubs = List.from((state as StatePubsLoadSuccess).pubList);
-      }
-
-      yield StatePubsLoadSuccess(_pubs, _selected);
-    }
-    if (event is EventPubsLoad) {
-      yield StatePubsLoading(); // to show progress indicator while waiting for the data
-
-      //check for internet connection
-      bool hasInternet = await repository.hasInternet();
-      if (!hasInternet) {
-             yield StateNoInternet();
-        return;
-      }
-
-      _pubs = await repository.fetchPubs(http.Client());
-      yield StatePubsLoadSuccess(_pubs, _selected);
-    }
+    on<EventPubSelect>(
+      (event, emit) {
+        _selected = event.selected;
+        if (state is StatePubsLoadSuccess) {
+          _pubs = (state as StatePubsLoadSuccess).pubList;
+        }
+        emit(StatePubsLoadSuccess(_pubs, _selected));
+      },
+    );
   }
-
 }
