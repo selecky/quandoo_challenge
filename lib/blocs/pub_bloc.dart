@@ -10,10 +10,10 @@ import 'pub_barrel.dart';
 
 class PubBloc extends Bloc<PubEvent, PubState> {
   List<Pub> _pubs = [];
-  Pub _selected;
+  Pub? _selected;
   final Repository repository;
 
-  PubBloc({@required this.repository}) : super(null) {
+  PubBloc({required this.repository}) : super(StatePubsLoading()) {
 
     on<EventPubsLoad>(
       (event, emit) async {

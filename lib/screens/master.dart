@@ -11,18 +11,18 @@ import '../customWidgets/myPubCard.dart';
 import 'detail.dart';
 
 class Master extends StatefulWidget {
-  const Master({Key key}) : super(key: key);
+  const Master({Key? key}) : super(key: key);
 
   @override
   _MasterState createState() => _MasterState();
 }
 
 class _MasterState extends State<Master> {
-  PubBloc _bloc;
-  List<Pub> _pubList;
-  Pub _selectedPub;
-  bool _isTablet;
-  Repository _repository;
+  late PubBloc _bloc;
+  late List<Pub> _pubList;
+  Pub? _selectedPub;
+  bool _isTablet = false;
+  late Repository _repository;
 
   @override
   void initState() {
@@ -87,7 +87,7 @@ class _MasterState extends State<Master> {
                                   children: [
                                     AutoSizeText(
                                       Strings.pubList,
-                                      style: Theme.of(context).textTheme.headline3.copyWith(fontSize: 16),
+                                      style: Theme.of(context).textTheme.headline5,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ],

@@ -46,6 +46,8 @@ class MyApp extends StatelessWidget {
             //Biggest white text
             headline1: TextStyle(fontSize: 40.0, color: Colors.white),
             //big white text
+            bodyText2: TextStyle(fontSize: 32.0, color: Colors.white),
+            //medium white text
             headline2: TextStyle(fontSize: 20.0, color: Colors.white),
             //small white text
             bodyText1: TextStyle(fontSize: 16.0, color: Colors.white),
@@ -71,7 +73,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, @required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -81,7 +83,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  bool _isTablet;
+  bool _isTablet = false;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +130,7 @@ class TabletView extends StatelessWidget {
       children: <Widget>[
         Expanded(child: Master()),
         Container(width: 16, height: MediaQuery.of(context).size.height),//divider
-        Expanded(child: Detail())
+        Expanded(child: Detail()),
       ],
     );
   }

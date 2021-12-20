@@ -8,9 +8,9 @@ class MyPubCard extends StatelessWidget {
   final bool isHighlighted;
 
   const MyPubCard({
-    Key key,
-    @required this.pub,
-    @required this.onTap,
+    Key? key,
+    required this.pub,
+    required this.onTap,
     this.isHighlighted = false,
   }) : super(key: key);
 

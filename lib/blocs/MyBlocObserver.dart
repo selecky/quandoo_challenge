@@ -4,8 +4,9 @@ import 'package:bloc/bloc.dart';
 // We can extend `BlocDelegate` and override `onEvent`, `onTransition` and `onError`
 // in order to handle events, transitions and errors from all Blocs.
 class MyBlocObserver extends BlocObserver {
+
   @override
-  void onEvent(Bloc bloc, Object event) {
+  void onEvent(Bloc bloc, Object? event) {
     super.onEvent(bloc, event);
     print(event);
   }
@@ -21,7 +22,4 @@ class MyBlocObserver extends BlocObserver {
     super.onError(bloc, error, stackTrace);
     print(error);
   }
-
-
-
 }

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:connectivity/connectivity.dart';
-import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:http/http.dart' as http;
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:quandoo_challenge/customWidgets/Pub.dart';
 
 import '../strings.dart';
@@ -16,7 +16,7 @@ class Repository {
 
     if (connectivityResult == ConnectivityResult.mobile) {
       // I am connected to a mobile network, make sure there is actually a net connection.
-      if (await DataConnectionChecker().hasConnection) {
+      if (await InternetConnectionChecker().hasConnection) {
         // Mobile data detected & internet connection confirmed.
         return true;
       } else {
@@ -25,14 +25,14 @@ class Repository {
       }
     } else if (connectivityResult == ConnectivityResult.wifi) {
       // I am connected to a WIFI network, make sure there is actually a net connection.
-      if (await DataConnectionChecker().hasConnection) {
+      if (await InternetConnectionChecker().hasConnection) {
         // Wifi detected & internet connection confirmed.
         return true;
       } else {
         // Wifi detected but no internet connection found.
         return false;
       }
-    } else if (await DataConnectionChecker().hasConnection) {
+    } else if (await InternetConnectionChecker().hasConnection) {
       // I am connected to internet with other means - e.g. ethernet.
       return true;
     } else {
@@ -93,12 +93,12 @@ class Address{
   String district;
 
   Address({
-    this.street,
-    this.number,
-    this.zipcode,
-    this.city,
-    this.country,
-    this.district,
+    required this.street,
+    required this.number,
+    required this.zipcode,
+    required this.city,
+    required this.country,
+    required this.district,
   });
 
   factory Address.fromJson(Map<String, dynamic> addressJson) {
@@ -118,7 +118,7 @@ class Location{
   Address address;
 
   Location({
-    this.address,
+    required this.address,
   });
 
   factory Location.fromJson(Map<String, dynamic> locationJson) {
@@ -133,7 +133,7 @@ class PhotoUrl{
   String url;
 
   PhotoUrl({
-    this.url,
+    required this.url,
   });
 
   factory PhotoUrl.fromJson(Map<String, dynamic> photoUrlJson) {

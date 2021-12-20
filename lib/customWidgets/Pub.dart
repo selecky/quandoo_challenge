@@ -9,10 +9,10 @@ class Pub extends Equatable {
   final List<PhotoUrl> images;
 
   const Pub({
-    @required this.name,
-    @required this.location,
-    @required this.reviewScore,
-    @required this.images,
+    required this.name,
+    required this.location,
+    required this.reviewScore,
+    required this.images,
   });
 
   @override
