@@ -24,8 +24,14 @@ class PubBloc extends Bloc<PubEvent, PubState> {
           emit(StateNoInternet());
           return;
         }
-        _pubs = await repository.fetchPubs(http.Client());
-        emit(StatePubsLoadSuccess(_pubs, _selected));
+        try{
+          _pubs = await repository.fetchPubs(http.Client());
+          emit(StatePubsLoadSuccess(_pubs, _selected));
+        } catch  (e){
+          print(e);
+          emit(StatePubsLoadFail());
+        }
+
       },
     );
 
