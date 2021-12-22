@@ -8,10 +8,8 @@ import 'package:quandoo_challenge/customWidgets/Pub.dart';
 import '../strings.dart';
 
 class Repository {
-
   //checking if the internet connection is available
   Future<bool> hasInternet() async {
-
     var connectivityResult = await (Connectivity().checkConnectivity());
 
     if (connectivityResult == ConnectivityResult.mobile) {
@@ -41,10 +39,8 @@ class Repository {
     }
   }
 
-
   //making API call to fetch restaurants data and converting them into a list of Dart objects
   Future<List<Pub>> fetchPubs(http.Client client) async {
-
     final response = await client.get(Uri.parse(Strings.quandooAPIUrl));
 
     if (response.statusCode == 200) {
@@ -53,38 +49,33 @@ class Repository {
 
       List<Pub> loadedPubs = [];
 
-      var responseBodyMap =
-          Map<String, dynamic>.from(jsonDecode(response.body));
+      var responseBodyMap = Map<String, dynamic>.from(jsonDecode(response.body));
 
-      var pubMapList =
-          List<Map<String, dynamic>>.from(responseBodyMap["merchants"]);
+      var pubMapList = List<Map<String, dynamic>>.from(responseBodyMap["merchants"]);
 
       loadedPubs = pubMapList.map((Map<String, dynamic> pubMap) {
-
         var list = pubMap['images'] as List;
         // print(list.runtimeType); //returns List<dynamic>
         List<PhotoUrl> photoUrlList = list.map((i) => PhotoUrl.fromJson(i)).toList();
 
         return Pub(
-            name: pubMap["name"],
-            location: Location.fromJson(pubMap['location']),
-            reviewScore: pubMap["reviewScore"],
-            images: photoUrlList,
+          name: pubMap["name"],
+          location: Location.fromJson(pubMap['location']),
+          reviewScore: pubMap["reviewScore"],
+          images: photoUrlList,
         );
       }).toList();
 
       return loadedPubs;
-
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
       throw Exception('Failed to load album');
     }
   }
-
 }
 
-class Address{
+class Address {
   String street;
   String number;
   String zipcode;
@@ -111,10 +102,9 @@ class Address{
       district: addressJson['district'],
     );
   }
-
 }
 
-class Location{
+class Location {
   Address address;
 
   Location({
@@ -122,14 +112,11 @@ class Location{
   });
 
   factory Location.fromJson(Map<String, dynamic> locationJson) {
-    return Location(
-      address: Address.fromJson(locationJson['address'])
-    );
+    return Location(address: Address.fromJson(locationJson['address']));
   }
-
 }
 
-class PhotoUrl{
+class PhotoUrl {
   String url;
 
   PhotoUrl({
@@ -141,5 +128,4 @@ class PhotoUrl{
       url: photoUrlJson['url'],
     );
   }
-
 }
