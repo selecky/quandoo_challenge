@@ -93,7 +93,7 @@ void main() {
 
         // Use Mockito to return an exception when it calls the
         // mockRepository.fetchPubs() method.
-        when(mockRepository.fetchPubs(any)).thenAnswer((_) async => throw Exception('API call failed'));
+        when(mockRepository.fetchPubs(any)).thenThrow(Exception('API call failed'));
         return pubBloc;
       },
       act: (bloc) => pubBloc.add(EventPubsLoad()),
