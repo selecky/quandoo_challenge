@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -190,7 +191,7 @@ Widget noInternetLayout(
                 child: InkWell(
                     onTap: () async {
                       //check for internet connection
-                      bool hasInternet = await repository.hasInternet();
+                      bool hasInternet = await repository.hasInternet(Connectivity());
                       if (!hasInternet) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(Strings.noInternetLong)));

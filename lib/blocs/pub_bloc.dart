@@ -1,4 +1,5 @@
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:quandoo_challenge/customWidgets/Pub.dart';
@@ -17,7 +18,7 @@ class PubBloc extends Bloc<PubEvent, PubState> {
       (event, emit) async {
         emit(StatePubsLoading()); // to show progress indicator while waiting for the data)
         //check for internet connection
-        bool hasInternet = await repository.hasInternet();
+        bool hasInternet = await repository.hasInternet(Connectivity());
         if (!hasInternet) {
           emit(StateNoInternet());
           return;

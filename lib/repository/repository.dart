@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:quandoo_challenge/customWidgets/Pub.dart';
@@ -9,8 +8,9 @@ import '../strings.dart';
 
 class Repository {
   //checking if the internet connection is available
-  Future<bool> hasInternet() async {
-    var connectivityResult = await (Connectivity().checkConnectivity());
+  Future<bool> hasInternet(Connectivity connectivity) async {
+
+    var connectivityResult = await (connectivity.checkConnectivity());
 
     if (connectivityResult == ConnectivityResult.mobile) {
       // I am connected to a mobile network, make sure there is actually a net connection.

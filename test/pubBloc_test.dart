@@ -43,7 +43,7 @@ void main() {
 
         // Use Mockito to return true when it calls the
         // mockRepository.hasInternet() method.
-        when(mockRepository.hasInternet()).thenAnswer((_) async => true);
+        when(mockRepository.hasInternet(any)).thenAnswer((_) async => true);
 
         // Use Mockito to return a successful response when it calls the
         // mockRepository.fetchPubs() method.
@@ -68,13 +68,12 @@ void main() {
     );
 
     blocTest(
-      'emits [StatePubsLoading, StateNoInternet] when EventPubsLoad is added '
-          'and no internet connection is available',
+      'emits [StatePubsLoading, StateNoInternet] when EventPubsLoad is added and no internet connection is available',
       build: () {
 
         // Use Mockito to return false when it calls the
         // mockRepository.hasInternet() method.
-        when(mockRepository.hasInternet()).thenAnswer((_) async => false);
+        when(mockRepository.hasInternet(any)).thenAnswer((_) async => false);
 
         return pubBloc;
       },
@@ -83,13 +82,12 @@ void main() {
     );
 
     blocTest(
-      'emits [StatePubsLoading, StatePubsLoadFail] when EventPubsLoad is added '
-          'and API call fails',
+      'emits [StatePubsLoading, StatePubsLoadFail] when EventPubsLoad is added and API call fails',
       build: () {
 
         // Use Mockito to return a successful response when it calls the
         // mockRepository.hasInternet() method.
-        when(mockRepository.hasInternet()).thenAnswer((_) async => true);
+        when(mockRepository.hasInternet(any)).thenAnswer((_) async => true);
 
         // Use Mockito to return an exception when it calls the
         // mockRepository.fetchPubs() method.
