@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:quandoo_challenge/customWidgets/Pub.dart';
@@ -7,34 +6,12 @@ import 'package:quandoo_challenge/customWidgets/Pub.dart';
 import '../strings.dart';
 
 class Repository {
+
   //checking if the internet connection is available
-  Future<bool> hasInternet(Connectivity connectivity, InternetConnectionChecker checker) async {
-
-    var connectivityResult = await (connectivity.checkConnectivity());
-
-    if (connectivityResult == ConnectivityResult.mobile) {
-      // I am connected to a mobile network, make sure there is actually a net connection.
-      if (await checker.hasConnection) {
-        // Mobile data detected & internet connection confirmed.
-        return true;
-      } else {
-        // Mobile data detected but no internet connection found.
-        return false;
-      }
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      // I am connected to a WIFI network, make sure there is actually a net connection.
-      if (await checker.hasConnection) {
-        // Wifi detected & internet connection confirmed.
-        return true;
-      } else {
-        // Wifi detected but no internet connection found.
-        return false;
-      }
-    } else if (await checker.hasConnection) {
-      // I am connected to internet with other means - e.g. ethernet.
+  Future<bool> hasInternet(InternetConnectionChecker checker) async {
+    if (await checker.hasConnection) {
       return true;
     } else {
-      // Neither mobile data, WIFI, or other connection detected, no internet connection found.
       return false;
     }
   }

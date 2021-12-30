@@ -13,29 +13,29 @@ import 'fetchPubs_test.mocks.dart';
 void main() {
 
   final repository = Repository();
-  late http.Client client;
+  late http.Client mockClient;
 
   setUp((){
-    client = MockClient();
+    mockClient = MockClient();
   });
 
   group('fetchPubs', () {
 
     test('returns a Restaurant if the http call completes successfully', () async {
       // Use MockClient to return a successful response.
-      when(client
+      when(mockClient
           .get(Uri.parse(Strings.quandooAPIUrl)))
           .thenAnswer((_) async =>
           http.Response(Strings.sampleResponse, 200));
-      expect(await repository.fetchPubs(client), isA<List<Pub>>());
+      expect(await repository.fetchPubs(mockClient), isA<List<Pub>>());
     });
 
     test('throws an exception if the http call completes with an error', () {
       // Use MockClient to return an 'Not Found' response.
-      when(client
+      when(mockClient
           .get(Uri.parse(Strings.quandooAPIUrl)))
           .thenAnswer((_) async => http.Response('Not Found', 404));
-      expect(repository.fetchPubs(client), throwsException);
+      expect(repository.fetchPubs(mockClient), throwsException);
     });
   });
 }
