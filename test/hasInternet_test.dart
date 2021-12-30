@@ -9,28 +9,62 @@ import 'package:quandoo_challenge/repository/repository.dart';
 import 'hasInternet_test.mocks.dart';
 
 
-// Generate a MockClient using the Mockito package.
-// Create new instances of this class in each test.
+// Generate MockConnectivity and MockInternetConnectionChecker using the Mockito package.
 @GenerateMocks([Connectivity, InternetConnectionChecker])
 void main() {
 
   late Connectivity connectivity;
-  late InternetConnectionChecker internetConnectionChecker;
+  late InternetConnectionChecker checker;
   late Repository repository;
   
   setUp((){
     connectivity = MockConnectivity();
-    internetConnectionChecker = MockInternetConnectionChecker();
+    checker = MockInternetConnectionChecker();
     repository = Repository();
   });
 
-  group('check for internet connection', (){
+  group('check for internet connection under various circumstances', (){
 
     test('check for mobile having a connection', () async{
       when(connectivity.checkConnectivity()).thenAnswer((_) async => ConnectivityResult.mobile);
-      when(internetConnectionChecker.hasConnection).thenAnswer((_) async => true);
+      when(checker.hasConnection).thenAnswer((_) async => true);
+      expect(await repository.hasInternet(connectivity, checker), true);
+    });
 
-      expect(await repository.hasInternet(connectivity), true);
+    test('check for mobile without a connection', () async{
+      when(connectivity.checkConnectivity()).thenAnswer((_) async => ConnectivityResult.mobile);
+      when(checker.hasConnection).thenAnswer((_) async => false);
+      expect(await repository.hasInternet(connectivity, checker), false);
+    });
+
+    test('check for wifi having a connection', () async{
+      when(connectivity.checkConnectivity()).thenAnswer((_) async => ConnectivityResult.wifi);
+      when(checker.hasConnection).thenAnswer((_) async => true);
+      expect(await repository.hasInternet(connectivity, checker), true);
+    });
+
+    test('check for wifi without a connection', () async{
+      when(connectivity.checkConnectivity()).thenAnswer((_) async => ConnectivityResult.wifi);
+      when(checker.hasConnection).thenAnswer((_) async => false);
+      expect(await repository.hasInternet(connectivity, checker), false);
+    });
+
+    test('check for ethernet having a connection', () async{
+      when(connectivity.checkConnectivity()).thenAnswer((_) async => ConnectivityResult.ethernet);
+      when(checker.hasConnection).thenAnswer((_) async => true);
+      expect(await repository.hasInternet(connectivity, checker), true);
+    });
+
+    test('check for ethernet without a connection', () async{
+      when(connectivity.checkConnectivity()).thenAnswer((_) async => ConnectivityResult.ethernet);
+      when(checker.hasConnection).thenAnswer((_) async => false);
+      expect(await repository.hasInternet(connectivity, checker), false);
+    });
+
+    test('check for ConnectivityResult.none', () async{
+      when(connectivity.checkConnectivity()).thenAnswer((_) async => ConnectivityResult.none);
+      when(checker.hasConnection).thenAnswer((_) async => false);
+      expect(await repository.hasInternet(connectivity, checker), false);
     });
 
   });

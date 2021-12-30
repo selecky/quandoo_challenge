@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:quandoo_challenge/repository/repository.dart';
 import 'package:quandoo_challenge/strings.dart';
 
@@ -191,7 +192,7 @@ Widget noInternetLayout(
                 child: InkWell(
                     onTap: () async {
                       //check for internet connection
-                      bool hasInternet = await repository.hasInternet(Connectivity());
+                      bool hasInternet = await repository.hasInternet(Connectivity(), InternetConnectionChecker());
                       if (!hasInternet) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(Strings.noInternetLong)));
