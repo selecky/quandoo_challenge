@@ -133,7 +133,7 @@ class _MasterState extends State<Master> {
                       ),
                     );
 
-//StatePubsLoadFail - API all failed
+//StatePubsLoadFail - API call failed
                   } else {
                     return Center(
                         child: Container(

@@ -1,30 +1,45 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:quandoo_challenge/screens/main.dart';
+import 'package:quandoo_challenge/customWidgets/Pub.dart';
+import 'package:quandoo_challenge/customWidgets/myPubCard.dart';
+import 'package:quandoo_challenge/repository/repository.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  testWidgets('test MyPubCard widget', (WidgetTester tester) async {
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    final Pub testPub =
+    Pub(
+        name: 'name',
+        location: Location(address: Address(
+            street: 'street',
+            number: 'number',
+            zipcode: 'zipcode',
+            city: 'city',
+            country: 'country',
+            district: 'district')),
+        reviewScore: 'reviewScore',
+        images: []
+    );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpWidget(
+      //MyPubCard widget is wrapped with MaterialApp and Scaffold in order to provide Material widget ancestor
+        MaterialApp(
+            home: Scaffold(body: MyPubCard(pub: testPub, onTap: () {print('MyPubCard tapped');}))));
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that myPubCard is found.
+    expect(find.byType(MyPubCard), findsOneWidget);
+
+    //finds only name Text
+    expect(find.text('name'), findsOneWidget);
+    expect(find.text('street'), findsNothing);
+
+    //finds icon instead of pub photo because Pub injected into MyPubCard has no images
+    expect(find.byIcon(Icons.deck_rounded), findsOneWidget);
+    expect(find.byType(Image), findsNothing);
+
+    //tap prints message to console
+    await tester.tap(find.byType(MyPubCard));
+
   });
 }

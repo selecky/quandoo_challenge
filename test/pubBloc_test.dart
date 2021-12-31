@@ -51,7 +51,7 @@ void main() {
                   country: 'country',
                   district: 'district')),
               reviewScore: 'reviewScore',
-              images: [PhotoUrl(url: 'url')]
+              images: []
           ),
         ]);
         return pubBloc;
