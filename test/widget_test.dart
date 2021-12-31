@@ -6,7 +6,10 @@ import 'package:quandoo_challenge/customWidgets/myPubCard.dart';
 import 'package:quandoo_challenge/repository/repository.dart';
 
 void main() {
+
   testWidgets('test MyPubCard widget', (WidgetTester tester) async {
+
+    int numOfTaps = 0;
 
     final Pub testPub =
     Pub(
@@ -25,9 +28,9 @@ void main() {
     await tester.pumpWidget(
       //MyPubCard widget is wrapped with MaterialApp and Scaffold in order to provide Material widget ancestor
         MaterialApp(
-            home: Scaffold(body: MyPubCard(pub: testPub, onTap: () {print('MyPubCard tapped');}))));
+            home: Scaffold(body: MyPubCard(pub: testPub, onTap: () {print(numOfTaps++);}))));
 
-    // Verify that myPubCard is found.
+    // Verify that myPubCard is rendered.
     expect(find.byType(MyPubCard), findsOneWidget);
 
     //finds only name Text
@@ -38,8 +41,9 @@ void main() {
     expect(find.byIcon(Icons.deck_rounded), findsOneWidget);
     expect(find.byType(Image), findsNothing);
 
-    //tap prints message to console
+    //test onTap functionality
     await tester.tap(find.byType(MyPubCard));
+    expect(numOfTaps, 1);
 
   });
 }
