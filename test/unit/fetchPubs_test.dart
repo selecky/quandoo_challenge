@@ -8,6 +8,7 @@ import 'package:quandoo_challenge/strings.dart';
 
 import 'fetchPubs_test.mocks.dart';
 
+
 // Generate a MockClient using the Mockito package.
 @GenerateMocks([http.Client])
 void main() {
