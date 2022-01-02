@@ -47,7 +47,9 @@ class _MasterState extends State<Master> {
               height: MediaQuery.of(context).size.height,
               child: FlareActor(
                 'assets/animations/eating.flr',
-                animation: 'move',
+                animation:
+                // 'move',
+                'static',
                 fit: BoxFit.fill,
               ),
             ),

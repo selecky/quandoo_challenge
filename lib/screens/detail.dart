@@ -50,7 +50,9 @@ class _DetailState extends State<Detail> with TickerProviderStateMixin {
           height: MediaQuery.of(context).size.height,
           child: FlareActor(
             'assets/animations/eating.flr',
-            animation: 'move',
+            animation:
+            // 'move',
+            'static',
             fit: BoxFit.fill,
           ),
         ),
