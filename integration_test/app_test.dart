@@ -1,7 +1,7 @@
 
 import 'package:quandoo_challenge/customWidgets/myPubCard.dart';
 import 'package:quandoo_challenge/screens/detail.dart';
-import 'package:quandoo_challenge/screens/main.dart' as app;
+import 'package:quandoo_challenge/main.dart' as app;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:quandoo_challenge/screens/master.dart';
@@ -24,5 +24,8 @@ void main() {
       // Detail widget with restaurant detail is rendered
       expect(find.byType(Detail), findsOneWidget);
         });
+
+    // TODO - test for tablet view
+
   });
 }

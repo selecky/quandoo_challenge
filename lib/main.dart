@@ -6,10 +6,10 @@ import 'package:quandoo_challenge/repository/repository.dart';
 import 'package:quandoo_challenge/screens/detail.dart';
 import 'package:quandoo_challenge/screens/master.dart';
 import 'package:quandoo_challenge/strings.dart';
-import '../blocs/pub_barrel.dart';
+import 'blocs/pub_barrel.dart';
 
 void main() {
-  BlocObserver observer = MyBlocObserver();//monitors bloc functionality
+  BlocObserver observer = MyBlocObserver(); //monitors bloc functionality
   runApp(MyApp());
 }
 
@@ -20,28 +20,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //to make statusBar and systemNavigationBar dark
-    SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle.dark
-    );
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
 
     return BlocProvider(
-      create: (context) => PubBloc(repository: repository)..add(EventPubsLoad()),//initialize the app with an API call
+      create: (context) => PubBloc(repository: repository)
+        ..add(EventPubsLoad()), //initialize the app with an API call
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: Strings.title,
         theme: ThemeData(
-
           primarySwatch: Colors.amber,
           primaryColor: Colors.amber[600],
           primaryColorDark: Colors.amber[700],
           primaryColorLight: Colors.amber,
           accentColor: Color(0xfffdd835),
           highlightColor: Color(0xffffeb3b),
-
           fontFamily: 'Rounded',
-
           textTheme: TextTheme(
             //Biggest white text
             headline1: TextStyle(fontSize: 40.0, color: Colors.white),
@@ -53,9 +48,9 @@ class MyApp extends StatelessWidget {
             bodyText1: TextStyle(fontSize: 16.0, color: Colors.white),
             //Black text
             headline3: TextStyle(
-                fontSize: 20.0,
-                color: Colors.black,
-                ),
+              fontSize: 20.0,
+              color: Colors.black,
+            ),
             //Grey text
             headline4: TextStyle(fontSize: 20.0),
             //black small text
@@ -63,8 +58,6 @@ class MyApp extends StatelessWidget {
             //grey small text
             headline6: TextStyle(fontSize: 16.0, color: Colors.grey),
           ),
-
-
         ),
         home: MyHomePage(title: Strings.title),
       ),
@@ -82,16 +75,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   bool _isTablet = false;
 
   @override
   Widget build(BuildContext context) {
-
     _isTablet = MediaQuery.of(context).size.shortestSide > 600;
 
     //force portrait orientation on mobile and landscape on tablet
-    if(_isTablet){
+    if (_isTablet) {
       SystemChrome.setPreferredOrientations([
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
@@ -103,16 +94,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ]);
     }
 
-
-    return LayoutBuilder(
-        builder: (context, constraints) {
-          if (_isTablet) {
-            return TabletView();
-          } else {
-            return MobileView();
-          }
-        }
-    );
+    if (_isTablet) {
+      return TabletView();
+    } else {
+      return MobileView();
+    }
   }
 }
 
@@ -129,7 +115,7 @@ class TabletView extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(child: Master()),
-        Container(width: 16, height: MediaQuery.of(context).size.height),//divider
+        Container(width: 16, height: MediaQuery.of(context).size.height), //divider
         Expanded(child: Detail()),
       ],
     );
