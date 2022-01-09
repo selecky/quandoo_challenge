@@ -60,7 +60,7 @@ class _MasterState extends State<Master> {
                   //if there is no internet connection prompt the user to connect
                   if (state is StateNoInternet) {
                     return Center(
-                        child: noInternetLayout(_bloc, _repository, context));
+                        child: NoInternetLayout(bloc: _bloc, repository: _repository, context: context));
                   } else if (state is StatePubsLoading) {
                     return Center(child: CircularProgressIndicator());
                   } else if (state is StatePubsLoadSuccess) {
@@ -158,64 +158,74 @@ class _MasterState extends State<Master> {
 }
 
 //Layout displayed when no internet connection is found
-Widget noInternetLayout(
-    Bloc bloc, Repository repository, BuildContext context) {
-  return Center(
-    child: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
-          padding: EdgeInsets.all(16),
-          constraints: BoxConstraints(maxWidth: 400),
-          decoration: BoxDecoration(
-              color: Colors.black26, borderRadius: BorderRadius.circular(16)),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Row(
-                children: [
-                  Text(
-                    Strings.noInternetShort,
-                    style: Theme.of(context).textTheme.headline2,
-                  ),
-                ],
-              ),
-              //spacer
-              Container(
-                height: 8,
-              ),
-              Text(
-                Strings.noInternetLong,
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
+class NoInternetLayout extends StatelessWidget {
+
+  final Bloc bloc;
+  final Repository repository;
+  final BuildContext context;
+
+  const NoInternetLayout({Key? key, required this.bloc, required this.repository, required this.context}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Container(
+            padding: EdgeInsets.all(16),
+            constraints: BoxConstraints(maxWidth: 400),
+            decoration: BoxDecoration(
+                color: Colors.black26, borderRadius: BorderRadius.circular(16)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Row(
+                  children: [
+                    Text(
+                      Strings.noInternetShort,
+                      style: Theme.of(context).textTheme.headline2,
+                    ),
+                  ],
+                ),
+                //spacer
+                Container(
+                  height: 8,
+                ),
+                Text(
+                  Strings.noInternetLong,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
 //try again button
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: InkWell(
-                    onTap: () async {
-                      //check for internet connection
-                      bool hasInternet = await repository.hasInternet(InternetConnectionChecker());
-                      if (!hasInternet) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(Strings.noInternetLong)));
-                        return;
-                      } else {
-                        //if there is internet, make the API call
-                        bloc.add(EventPubsLoad());
-                      }
-                    },
-                    child: Container(
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(32),
-                          color: Theme.of(context).primaryColor,
-                        ),
-                        child: Text(
-                          Strings.tryAgain.toUpperCase(),
-                          style: Theme.of(context).textTheme.headline5,
-                        ))),
-              )
-            ],
-          )),
-    ),
-  );
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: InkWell(
+                      onTap: () async {
+                        //check for internet connection
+                        bool hasInternet = await repository.hasInternet(InternetConnectionChecker());
+                        if (!hasInternet) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(Strings.noInternetLong)));
+                          return;
+                        } else {
+                          //if there is internet, make the API call
+                          bloc.add(EventPubsLoad());
+                        }
+                      },
+                      child: Container(
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(32),
+                            color: Theme.of(context).primaryColor,
+                          ),
+                          child: Text(
+                            Strings.tryAgain.toUpperCase(),
+                            style: Theme.of(context).textTheme.headline5,
+                          ))),
+                )
+              ],
+            )),
+      ),
+    );
+  }
 }
+
